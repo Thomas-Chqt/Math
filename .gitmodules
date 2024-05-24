@@ -1,0 +1,3 @@
+[submodule "dependencies/UtilsCPP"]
+	path = dependencies/UtilsCPP
+	url = https://github.com/Thomas-Chqt/UtilsCPP.git
