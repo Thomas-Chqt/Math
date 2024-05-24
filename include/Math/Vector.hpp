@@ -10,10 +10,24 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-#include "UtilsCPP/Types.hpp"
+#ifndef __METAL_VERSION__
+    #include "UtilsCPP/Types.hpp"
+#endif // __METAL_VERSION__
 
 namespace math
 {
+
+#ifdef __METAL_VERSION__
+    using vec2f = float2;
+    using vec3f = float3;
+    using vec4f = float4;
+    
+    using rgba  = vec4f;
+
+    // using vec2f = union{ struct{float x, y;      }; struct{float r, g;      }; };
+    // using vec3f = union{ struct{float x, y, z;   }; struct{float r, g, b;   }; };
+    // using vec4f = union{ struct{float x, y, z, w;}; struct{float r, g, b, a;}; };
+#else
 
 template<utils::uint8 L, typename T> struct Vector;
 
@@ -178,6 +192,8 @@ Vector<L, float>& operator /= (Vector<L, float>& lhs, float scalar)
         lhs[i] /= scalar;
     return lhs;
 }
+
+#endif // __METAL_VERSION__
 
 }
 
