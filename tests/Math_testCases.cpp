@@ -7,3 +7,23 @@
  * ---------------------------------------------------
  */
 
+#include <gtest/gtest.h>
+#include "Math/Vector.hpp"
+
+namespace math_test
+{
+
+using namespace math;
+
+TEST(VectorTest, scaling)
+{
+    vec3f v = { 1, 2, 3 };
+
+    v *= 3;
+
+    EXPECT_EQ(v.x, 1 * 3);
+    EXPECT_EQ(v.y, 2 * 3);
+    EXPECT_EQ(v.z, 3 * 3);
+}
+
+}
