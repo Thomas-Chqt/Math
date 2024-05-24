@@ -22,11 +22,11 @@ using vec3f = Vector<3, float>;
 using vec4f = Vector<4, float>;
 using rgba  = vec4f;
 
-#define RED   rgba(1.0, 0.0, 0.0, 1.0)
-#define GREEN rgba(0.0, 1.0, 0.0, 1.0)
-#define BLUE  rgba(0.0, 0.0, 1.0, 1.0)
-#define BLACK rgba(0.0, 0.0, 0.0, 1.0)
-#define WHITE rgba(1.0, 1.0, 1.0, 1.0)
+#define RED   math::rgba(1.0, 0.0, 0.0, 1.0)
+#define GREEN math::rgba(0.0, 1.0, 0.0, 1.0)
+#define BLUE  math::rgba(0.0, 0.0, 1.0, 1.0)
+#define BLACK math::rgba(0.0, 0.0, 0.0, 1.0)
+#define WHITE math::rgba(1.0, 1.0, 1.0, 1.0)
 
 template<>
 struct Vector<2, float>
