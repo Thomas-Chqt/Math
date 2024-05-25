@@ -6,7 +6,7 @@
 # ---------------------------------------------------
 
 if(NOT TARGET UtilsCPP)
-    execute_process(COMMAND git submodule update --init ${CMAKE_CURRENT_SOURCE_DIR}/UtilsCPP)
+    execute_process(COMMAND git submodule update --init UtilsCPP WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
     add_subdirectory(UtilsCPP)
 endif()
 target_link_libraries(Math PUBLIC UtilsCPP)
