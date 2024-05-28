@@ -193,6 +193,17 @@ Vector<L, float>& operator /= (Vector<L, float>& lhs, float scalar)
     return lhs;
 }
 
+template<utils::uint8 L>
+bool operator == (const Vector<L, float>& lhs, const Vector<L, float>& rhs)
+{
+    bool output = true;
+
+    for (utils::uint8 i = 0; i < L; i++)
+        output &= lhs[i] == rhs[i];
+
+    return output;
+}
+
 #endif // __METAL_VERSION__
 
 }

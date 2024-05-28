@@ -52,6 +52,7 @@ const vec4f& mat4x4::operator[](utils::uint8 idx) const
     return m_data[idx];
 }
 
+template<>
 vec4f operator * (const vec4f& v, const mat4x4& m)
 {
     return vec4f(
@@ -62,6 +63,7 @@ vec4f operator * (const vec4f& v, const mat4x4& m)
     );
 }
 
+template<>
 vec4f operator * (const mat4x4& m, const vec4f& v)
 {
     return vec4f(
@@ -72,6 +74,7 @@ vec4f operator * (const mat4x4& m, const vec4f& v)
     );
 }
 
+template<>
 mat4x4 operator * (const mat4x4& lhs, const mat4x4& rhs)
 {
     return mat4x4(

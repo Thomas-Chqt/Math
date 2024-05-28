@@ -19,6 +19,7 @@ namespace math
 template<utils::uint8 C, utils::uint8 R, typename T> class Matrix;
 
 using mat4x4 = Matrix<4, 4, float>;
+using mat3x3 = Matrix<3, 3, float>;
 
 template<>
 class Matrix<4, 4, float>
@@ -47,10 +48,56 @@ public:
     const vec4f& operator[](utils::uint8 idx) const;
 };
 
-vec4f operator * (const vec4f& v, const mat4x4& m);
-vec4f operator * (const mat4x4& m, const vec4f& v);
+template<>
+class Matrix<3, 3, float>
+{
+public:
+    Matrix();
+    Matrix(const Matrix&) = default;
+    Matrix(Matrix&&)      = default;
 
-mat4x4 operator * (const mat4x4& lhs, const mat4x4& rhs);
+    Matrix(float s);
+
+    Matrix(const vec3f& v1,
+           const vec3f& v2,
+           const vec3f& v3);
+    
+    Matrix(float x0, float x1, float x2,
+           float y0, float y1, float y2,
+           float z0, float z1, float z2);
+private:
+    vec3f m_data[4];
+
+public:
+    vec3f& operator [] (utils::uint8 idx);
+    const vec3f& operator [] (utils::uint8 idx) const;
+};
+
+template<utils::uint8 S>
+Vector<S, float> operator * (const Vector<S, float>&, const Matrix<S, S, float>&);
+
+template<utils::uint8 S>
+inline Vector<S, float> operator *= (Vector<S, float>& vec, const Matrix<S, S, float>& mat) { return vec = vec * mat; }
+
+template<utils::uint8 S>
+Vector<S, float> operator * (const Matrix<S, S, float>&, const Vector<S, float>&);
+
+template<utils::uint8 S>
+Matrix<S, S, float> operator * (const Matrix<S, S, float>&, const Matrix<S, S, float>&);
+
+template<utils::uint8 S>
+inline Matrix<S, S, float> operator *= (Matrix<S, S, float>& lhs, const Matrix<S, S, float>& rhs) { return lhs = lhs * rhs; }
+
+template<utils::uint8 S>
+bool operator == (const Matrix<S, S, float>& lhs, const Matrix<S, S, float>& rhs)
+{
+    bool output = true;
+
+    for (utils::uint8 i = 0; i < S; i++)
+        output &= lhs[i] == rhs[i];
+
+    return output;
+}
 
 }
 
