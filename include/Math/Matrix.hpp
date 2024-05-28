@@ -22,7 +22,7 @@ using mat4x4 = Matrix<4, 4, float>;
 using mat3x3 = Matrix<3, 3, float>;
 
 template<>
-class Matrix<4, 4, float>
+class alignas(16) Matrix<4, 4, float>
 {
 public:
     Matrix();
@@ -52,7 +52,7 @@ public:
 };
 
 template<>
-class Matrix<3, 3, float>
+class alignas(16) Matrix<3, 3, float>
 {
 public:
     Matrix();
@@ -69,7 +69,7 @@ public:
            float y0, float y1, float y2,
            float z0, float z1, float z2);
 private:
-    vec3f m_data[4];
+    vec3f m_data[3];
 
 public:
     Matrix& operator = (const Matrix&) = default;

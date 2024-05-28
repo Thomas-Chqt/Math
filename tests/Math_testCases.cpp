@@ -53,4 +53,30 @@ TEST(MatrixTest, multiplication)
     EXPECT_EQ(mat1 * mat1, mat3);
 }
 
+TEST(VectorTest, sizeof)
+{
+    EXPECT_EQ(sizeof(vec2f), 8);
+    EXPECT_EQ(sizeof(vec3f), 16);
+    EXPECT_EQ(sizeof(vec4f), 16);
+}
+
+TEST(VectorTest, alignof)
+{
+    EXPECT_EQ(alignof(vec2f), 8);
+    EXPECT_EQ(alignof(vec3f), 16);
+    EXPECT_EQ(alignof(vec4f), 16);
+}
+
+TEST(MatrixTest, sizeof)
+{
+    EXPECT_EQ(sizeof(mat4x4), 64);
+    EXPECT_EQ(sizeof(mat3x3), 48);
+}
+
+TEST(MatrixTest, alignof)
+{
+    EXPECT_EQ(alignof(mat4x4), 16);
+    EXPECT_EQ(alignof(mat3x3), 16);
+}
+
 }

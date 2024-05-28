@@ -43,7 +43,7 @@ using rgba  = vec4f;
 #define WHITE math::rgba(1.0, 1.0, 1.0, 1.0)
 
 template<>
-struct Vector<2, float>
+struct alignas(8) Vector<2, float>
 {
     float x = 0;
     float y = 0;
@@ -68,7 +68,7 @@ struct Vector<2, float>
 };
 
 template<>
-struct Vector<3, float>
+struct alignas(16) Vector<3, float>
 {
     union
     {
@@ -97,7 +97,7 @@ struct Vector<3, float>
 };
 
 template<>
-struct Vector<4, float>
+struct alignas(16) Vector<4, float>
 {
     union
     {
