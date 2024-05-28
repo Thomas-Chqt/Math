@@ -44,6 +44,9 @@ private:
     vec4f m_data[4];
 
 public:
+    Matrix& operator = (const Matrix&) = default;
+    Matrix& operator = (Matrix&&)      = default;
+
     vec4f& operator[](utils::uint8 idx);
     const vec4f& operator[](utils::uint8 idx) const;
 };
@@ -69,6 +72,9 @@ private:
     vec3f m_data[4];
 
 public:
+    Matrix& operator = (const Matrix&) = default;
+    Matrix& operator = (Matrix&&)      = default;
+
     vec3f& operator [] (utils::uint8 idx);
     const vec3f& operator [] (utils::uint8 idx) const;
 };
