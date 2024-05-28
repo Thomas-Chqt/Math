@@ -7,27 +7,36 @@
 
 cmake_minimum_required(VERSION 3.23)
 
-get_directory_property(hasParent PARENT_DIRECTORY)
-if(NOT hasParent)
-    project(Math LANGUAGES CXX)
+option(BUILD_SHARED_LIBS   "Build using shared libraries"           OFF)
+option(MATH_IN_PARENT_PROJ "Add Math library to the parend project" ON)
+option(MATH_INCLUDE_TESTS  "Include Math tests int the project"     OFF)
+
+
+get_directory_property(HAS_PARENT PARENT_DIRECTORY)
+if(NOT MATH_IN_PARENT_PROJ OR NOT HAS_PARENT)
+    project(Math)
 endif()
 
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+add_subdirectory("dependencies")
 
-option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
-option(MATH_BUILD_TESTS "Build utils cpp test executables" OFF)
+enable_language(CXX)
+
 
 add_library(Math)
+
+set_target_properties(Math PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
+
 
 file(GLOB_RECURSE MATH_SRC "src/*.cpp" "src/*.tpp" "include/*.tpp" "src/*.hpp" "include/*.hpp")
 target_sources(Math PRIVATE ${MATH_SRC})
 
 target_include_directories(Math PRIVATE "src" PUBLIC "include")
 
-add_subdirectory(dependencies)
 
-if (MATH_BUILD_TESTS)
+target_link_libraries(Math PUBLIC UtilsCPP)
+
+
+if (MATH_INCLUDE_TESTS)
     enable_testing()
     add_subdirectory(tests)
 endif()

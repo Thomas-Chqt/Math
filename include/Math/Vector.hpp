@@ -76,7 +76,7 @@ struct Vector<3, float>
         struct{ float r    , g    , b    ; };
     };
 
-    Vector()              = default;
+    Vector();
     Vector(const Vector&) = default;
     Vector(Vector&&)      = default;
 
@@ -105,7 +105,7 @@ struct Vector<4, float>
         struct{ float r    , g    , b    , a    ; };
     };
 
-    Vector()              = default;
+    Vector();
     Vector(const Vector&) = default;
     Vector(Vector&&)      = default;
 

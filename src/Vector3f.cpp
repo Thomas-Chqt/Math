@@ -17,6 +17,10 @@ using utils::uint8;
 namespace math
 {
 
+vec3f::Vector() : x(0), y(0), z(0)
+{
+}
+
 vec3f::Vector(float x, float y, float z) : x(x), y(y), z(z)
 {
 }

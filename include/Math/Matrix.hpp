@@ -24,7 +24,7 @@ template<>
 class Matrix<4, 4, float>
 {
 public:
-    Matrix()              = default;
+    Matrix();
     Matrix(const Matrix&) = default;
     Matrix(Matrix&&)      = default;
 

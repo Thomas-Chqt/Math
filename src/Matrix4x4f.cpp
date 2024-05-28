@@ -13,6 +13,14 @@
 namespace math
 {
 
+mat4x4::Matrix()
+    : m_data{ Vector<4, float>(0, 0, 0, 0),
+              Vector<4, float>(0, 0, 0, 0),
+              Vector<4, float>(0, 0, 0, 0),
+              Vector<4, float>(0, 0, 0, 0) }
+{
+}
+
 mat4x4::Matrix(float s)
     : m_data{ Vector<4, float>(s, 0, 0, 0),
               Vector<4, float>(0, s, 0, 0),
