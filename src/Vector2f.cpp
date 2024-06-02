@@ -27,7 +27,7 @@ vec2f::Vector(float arr[2]) : x(arr[0]), y(arr[1])
 
 float vec2f::length() const
 {
-    return std::sqrtf(x * x + y * y);
+    return std::sqrt(x * x + y * y);
 }
 
 void vec2f::normalize()

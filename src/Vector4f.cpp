@@ -43,7 +43,7 @@ vec4f::Vector(vec3f v3f, float w) : x(v3f.x), y(v3f.y), z(v3f.z), w(w)
 
 float vec4f::length() const
 {
-    return std::sqrtf(x*x + y*y + z*z + w*w);
+    return std::sqrt(x*x + y*y + z*z + w*w);
 }
 
 void vec4f::normalize()
