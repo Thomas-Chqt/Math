@@ -72,8 +72,8 @@ struct alignas(16) Vector<3, float>
 {
     union
     {
-        struct{ float x = 0, y = 0, z = 0; };
-        struct{ float r    , g    , b    ; };
+        struct{ float x, y, z; };
+        struct{ float r, g, b; };
     };
 
     Vector();
@@ -101,8 +101,8 @@ struct alignas(16) Vector<4, float>
 {
     union
     {
-        struct{ float x = 0, y = 0, z = 0, w = 0; };
-        struct{ float r    , g    , b    , a    ; };
+        struct{ float x, y, z, w; };
+        struct{ float r, g, b, a; };
     };
 
     Vector();
