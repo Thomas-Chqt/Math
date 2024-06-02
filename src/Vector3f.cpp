@@ -35,7 +35,7 @@ vec3f::Vector(vec2f v2f, float z) : x(v2f.x), y(v2f.y), z(z)
 
 float vec3f::length() const
 {
-    return std::sqrtf(x * x + y * y + z * z);
+    return std::sqrt(x * x + y * y + z * z);
 }
 
 void vec3f::normalize()
