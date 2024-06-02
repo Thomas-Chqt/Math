@@ -52,7 +52,7 @@ jobs:
         
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: de-vri-es/setup-git-credentials@v2.0
+      - uses: de-vri-es/setup-git-credentials@v2.1.2
         with:
             credentials: https://${{ github.actor }}:${{ secrets.ACCESS_TOKEN }}@github.com/
             
