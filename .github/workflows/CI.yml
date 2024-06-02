@@ -3,6 +3,7 @@ run-name: Multi platform build and test for ${{ github.ref }} by ${{ github.acto
 on:
   pull_request_target:
     branches: [ $default-branch ]
+  push:
   workflow_dispatch:
 
 jobs:
