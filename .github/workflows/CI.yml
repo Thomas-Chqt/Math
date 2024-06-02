@@ -54,10 +54,10 @@ jobs:
     steps:
       - uses: de-vri-es/setup-git-credentials@v2.0
         with:
-            credentials: ${{ secrets.GIT_CREDENTIALS }}
+            credentials: https://${{ github.actor }}:${{ secrets.ACCESS_TOKEN }}@github.com/
             
       - uses: actions/checkout@v4
-      
+
       - name: Configure CMake
         run: > 
           cmake -B build -S ${{ github.workspace }}
