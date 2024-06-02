@@ -52,11 +52,11 @@ jobs:
         
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
-
       - uses: de-vri-es/setup-git-credentials@v2.0
         with:
-          credentials: https://${{ github.actor }}:@${{ secrets.PAT }}github.com/
+            credentials: ${{ secrets.GIT_CREDENTIALS }}
+            
+      - uses: actions/checkout@v4
       
       - name: Configure CMake
         run: > 
