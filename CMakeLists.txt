@@ -7,20 +7,12 @@
 
 cmake_minimum_required(VERSION 3.16)
 
-option(BUILD_SHARED_LIBS   "Build using shared libraries"           OFF)
-option(MATH_IN_PARENT_PROJ "Add Math library to the parend project" ON)
-option(MATH_INCLUDE_TESTS  "Include Math tests int the project"     OFF)
+option(BUILD_SHARED_LIBS  "Build using shared libraries"       OFF)
+option(MATH_INCLUDE_TESTS "Include Math tests int the project" OFF)
 
-
-get_directory_property(HAS_PARENT PARENT_DIRECTORY)
-if(NOT MATH_IN_PARENT_PROJ OR NOT HAS_PARENT)
-    project(Math)
-endif()
+project(Math CXX)
 
 add_subdirectory("dependencies")
-
-enable_language(CXX)
-
 
 add_library(Math)
 
