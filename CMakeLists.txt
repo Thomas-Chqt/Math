@@ -10,7 +10,9 @@ cmake_minimum_required(VERSION 3.16)
 option(BUILD_SHARED_LIBS  "Build using shared libraries"       OFF)
 option(MATH_INCLUDE_TESTS "Include Math tests int the project" OFF)
 
-project(Math CXX)
+project(Math)
+
+enable_language(CXX)
 
 add_subdirectory("dependencies")
 
