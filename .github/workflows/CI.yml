@@ -1,8 +1,7 @@
 name: Continuous Integration
 run-name: Multi platform build and test for ${{ github.ref }} by ${{ github.actor }}
 on:
-  pull_request_target:
-    branches: [ $default-branch ]
+  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -61,7 +60,7 @@ jobs:
         run: > 
           cmake -B build -S ${{ github.workspace }}
           -DCMAKE_BUILD_TYPE=Release
-          -DMATH_INCLUDE_TESTS=ON
+          -DMATH_BUILD_TESTS=ON
           -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
           -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
           
