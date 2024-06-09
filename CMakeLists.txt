@@ -7,16 +7,17 @@
 
 cmake_minimum_required(VERSION 3.16)
 
+enable_testing()
+
 option(BUILD_SHARED_LIBS  "Build using shared libraries"       OFF)
-option(MATH_INCLUDE_TESTS "Include Math tests int the project" OFF)
+option(MATH_BUILD_TESTS   "Include Math tests int the project" OFF)
 
 project(Math)
 
 enable_language(CXX)
 
-add_subdirectory("dependencies")
 
-add_library(Math)
+add_library(Math ${MATH_LIBRARY_TYPE})
 
 set_target_properties(Math PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
 
@@ -26,11 +27,9 @@ target_sources(Math PRIVATE ${MATH_SRC})
 
 target_include_directories(Math PRIVATE "src" PUBLIC "include")
 
+add_subdirectory("dependencies")
 
-target_link_libraries(Math PUBLIC UtilsCPP)
 
-
-if (MATH_INCLUDE_TESTS)
-    enable_testing()
+if (MATH_BUILD_TESTS)
     add_subdirectory(tests)
 endif()
