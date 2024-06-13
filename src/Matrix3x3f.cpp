@@ -21,9 +21,9 @@ mat3x3::Matrix()
 }
 
 mat3x3::Matrix(float s)
-    : m_data{ vec3f(0, 0, 0),
-              vec3f(s, 0, 0),
-              vec3f(0, s, 0) }
+    : m_data{ vec3f(s, 0, 0),
+              vec3f(0, s, 0),
+              vec3f(0, 0, s) }
 {
 }
 
