@@ -100,7 +100,6 @@ struct alignas(16) Vector<3, float>
 };
 
 vec3f cross(const vec3f&, const vec3f&);
-float dot(const vec3f&, const vec3f&);
 
 template<>
 struct alignas(16) Vector<4, float>
@@ -234,6 +233,16 @@ std::ostream& operator << (std::ostream& os, const Vector<L, float>& vec)
     return os;
 }
 
+template<utils::uint8 L>
+float dot(const Vector<L, float>& lhs, const Vector<L, float>& rhs)
+{
+    float output = 0;
+
+    for (utils::uint8 i = 0; i < L; i++)
+        output += lhs[i] * rhs[i];
+
+    return output;
+}
 
 
 #endif // __METAL_VERSION__

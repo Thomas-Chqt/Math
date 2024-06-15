@@ -85,9 +85,4 @@ vec3f cross(const vec3f& lhs, const vec3f& rhs)
     );
 }
 
-float dot(const vec3f& lhs, const vec3f& rhs)
-{
-    return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
-}
-
 }
