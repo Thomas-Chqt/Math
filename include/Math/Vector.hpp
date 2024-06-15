@@ -11,6 +11,7 @@
 # define VECTOR_HPP
 
 #ifndef __METAL_VERSION__
+    #include <ostream>
     #include "UtilsCPP/Types.hpp"
 #endif // __METAL_VERSION__
 
@@ -84,6 +85,8 @@ struct alignas(16) Vector<3, float>
     Vector(float arr[3]);
     Vector(vec2f v2f, float z);
 
+    inline vec2f xy() { return vec2f(x, y); }
+
     float length() const;
 
     void normalize();
@@ -95,6 +98,9 @@ struct alignas(16) Vector<3, float>
     float& operator[](utils::uint8 idx);
     const float& operator[](utils::uint8 idx) const;
 };
+
+vec3f cross(const vec3f&, const vec3f&);
+float dot(const vec3f&, const vec3f&);
 
 template<>
 struct alignas(16) Vector<4, float>
@@ -114,6 +120,9 @@ struct alignas(16) Vector<4, float>
     Vector(vec2f v2fa, vec2f v2fb);
     Vector(vec2f v2f, float z, float w);
     Vector(vec3f v3f, float w);
+
+    inline vec2f xy() { return vec2f(x, y); }
+    inline vec3f xyz() { return vec3f(x, y, z); }
 
     float length() const;
 
@@ -139,7 +148,7 @@ Vector<L, float> operator - (const Vector<L, float>& v)
 }
 
 template<utils::uint8 L>
-Vector<L, float> operator + (const Vector<L, float>& lhs, Vector<L, float> rhs)
+Vector<L, float> operator + (const Vector<L, float>& lhs, const Vector<L, float>& rhs)
 {
     float arr[L];
 
@@ -150,10 +159,16 @@ Vector<L, float> operator + (const Vector<L, float>& lhs, Vector<L, float> rhs)
 }
 
 template<utils::uint8 L>
+inline Vector<L, float>& operator += (Vector<L, float>& lhs, const Vector<L, float>& rhs) { return lhs = lhs + rhs; }
+
+template<utils::uint8 L>
 Vector<L, float> operator - (const Vector<L, float>& lhs, Vector<L, float> rhs)
 {
     return lhs + (-rhs);
 }
+
+template<utils::uint8 L>
+inline Vector<L, float>& operator -= (Vector<L, float>& lhs, const Vector<L, float>& rhs) { return lhs = lhs - rhs; }
 
 template<utils::uint8 L>
 Vector<L, float> operator * (const Vector<L, float>& lhs, float scalar)
@@ -203,6 +218,23 @@ bool operator == (const Vector<L, float>& lhs, const Vector<L, float>& rhs)
 
     return output;
 }
+
+template<utils::uint8 L>
+std::ostream& operator << (std::ostream& os, const Vector<L, float>& vec)
+{
+    os << '[';
+    for (utils::uint8 i = 0; i < L; i++)
+    {
+        if(i > 0)
+            os << ", ";
+        os << vec[i];
+    }
+    os << ']';
+
+    return os;
+}
+
+
 
 #endif // __METAL_VERSION__
 
