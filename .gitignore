@@ -3,3 +3,4 @@ build.nosync/
 .cache/
 .vscode/
 .DS_Store
+.clangd

@@ -76,4 +76,13 @@ const float& vec3f::operator[](uint8 idx) const
     }
 }
 
+vec3f cross(const vec3f& lhs, const vec3f& rhs)
+{
+    return vec3f(
+        lhs.y * rhs.z - lhs.z * rhs.y,
+        lhs.z * rhs.x - lhs.x * rhs.z,
+        lhs.x * rhs.y - lhs.y * rhs.x
+    );
+}
+
 }

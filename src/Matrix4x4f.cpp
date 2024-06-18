@@ -9,6 +9,7 @@
 
 #include "Math/Matrix.hpp"
 #include "Math/Vector.hpp"
+#include <cmath>
 
 namespace math
 {
@@ -97,6 +98,45 @@ mat4x4 operator * (const mat4x4& lhs, const mat4x4& rhs)
         lhs[0][3] * rhs[1][0] + lhs[1][3] * rhs[1][1] + lhs[2][3] * rhs[1][2] + lhs[3][3] * rhs[1][3],
         lhs[0][3] * rhs[2][0] + lhs[1][3] * rhs[2][1] + lhs[2][3] * rhs[2][2] + lhs[3][3] * rhs[2][3],
         lhs[0][3] * rhs[3][0] + lhs[1][3] * rhs[3][1] + lhs[2][3] * rhs[3][2] + lhs[3][3] * rhs[3][3]
+    );
+}
+
+mat4x4 mat4x4::rotation(const vec3f& rads)
+{
+    using std::cos;
+    using std::sin;
+
+    math::mat4x4 rotX(
+        1,           0,            0, 0,
+        0, cos(rads.x), -sin(rads.x), 0,
+        0, sin(rads.x),  cos(rads.x), 0,
+        0,           0,            0, 1
+    );
+
+    math::mat4x4 rotY(
+        cos(rads.y), 0, sin(rads.y), 0,
+                  0, 1,           0, 0,
+       -sin(rads.y), 0, cos(rads.y), 0,
+                  0, 0,           0, 1
+    );
+
+    math::mat4x4 rotZ(
+        cos(rads.z), -sin(rads.z), 0, 0,
+        sin(rads.z),  cos(rads.z), 0, 0,
+                  0,            0, 1, 0,
+                  0,            0, 0, 1
+    );
+
+    return rotX * rotY * rotZ;
+}
+
+mat4x4 mat4x4::translation(const vec3f& vals)
+{
+    return math::mat4x4(
+        1, 0, 0, vals.x,
+        0, 1, 0, vals.y,
+        0, 0, 1, vals.z,
+        0, 0, 0,      1
     );
 }
 

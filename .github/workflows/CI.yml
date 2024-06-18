@@ -1,5 +1,5 @@
 name: Continuous Integration
-run-name: Multi platform build and test for ${{ github.ref }} by ${{ github.actor }}
+run-name: Multi platform build and test for ${{ github.ref_name }} by ${{ github.actor }}
 on:
   pull_request:
   workflow_dispatch:
@@ -50,10 +50,6 @@ jobs:
         
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: de-vri-es/setup-git-credentials@v2.1.2
-        with:
-            credentials: https://${{ github.actor }}:${{ secrets.ACCESS_TOKEN }}@github.com/
-            
       - uses: actions/checkout@v4
 
       - name: Configure CMake
@@ -69,6 +65,6 @@ jobs:
 
       - name: Test
         working-directory: build
-        run: ctest --output-on-failure
+        run: ctest -j --output-on-failure
         env:
           GTEST_COLOR: 1

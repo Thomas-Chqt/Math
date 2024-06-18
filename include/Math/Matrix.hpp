@@ -40,6 +40,10 @@ public:
            float y0, float y1, float y2, float y3,
            float z0, float z1, float z2, float z3,
            float w0, float w1, float w2, float w3);
+
+    static mat4x4 rotation(const vec3f& rads);
+    static mat4x4 translation(const vec3f& vals);
+
 private:
     vec4f m_data[4];
 
