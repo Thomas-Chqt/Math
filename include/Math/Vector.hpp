@@ -85,7 +85,7 @@ struct alignas(16) Vector<3, float>
     Vector(float arr[3]);
     Vector(vec2f v2f, float z);
 
-    inline vec2f xy() { return vec2f(x, y); }
+    inline vec2f xy() const { return vec2f(x, y); }
 
     float length() const;
 
@@ -120,8 +120,8 @@ struct alignas(16) Vector<4, float>
     Vector(vec2f v2f, float z, float w);
     Vector(vec3f v3f, float w);
 
-    inline vec2f xy() { return vec2f(x, y); }
-    inline vec3f xyz() { return vec3f(x, y, z); }
+    inline vec2f xy() const { return vec2f(x, y); }
+    inline vec3f xyz() const { return vec3f(x, y, z); }
 
     float length() const;
 
