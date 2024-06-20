@@ -24,6 +24,7 @@ namespace math
     using vec4f = float4;
     
     using rgba  = vec4f;
+    using rgb   = vec3f;
 
     // using vec2f = union{ struct{float x, y;      }; struct{float r, g;      }; };
     // using vec3f = union{ struct{float x, y, z;   }; struct{float r, g, b;   }; };
@@ -36,6 +37,7 @@ using vec2f = Vector<2, float>;
 using vec3f = Vector<3, float>;
 using vec4f = Vector<4, float>;
 using rgba  = vec4f;
+using rgb   = vec3f;
 
 #define RED   math::rgba(1.0, 0.0, 0.0, 1.0)
 #define GREEN math::rgba(0.0, 1.0, 0.0, 1.0)
