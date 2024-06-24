@@ -45,6 +45,12 @@ using rgb   = vec3f;
 #define BLACK math::rgba(0.0, 0.0, 0.0, 1.0)
 #define WHITE math::rgba(1.0, 1.0, 1.0, 1.0)
 
+#define RED3   math::rgb(1.0, 0.0, 0.0)
+#define GREEN3 math::rgb(0.0, 1.0, 0.0)
+#define BLUE3  math::rgb(0.0, 0.0, 1.0)
+#define BLACK3 math::rgb(0.0, 0.0, 0.0)
+#define WHITE3 math::rgb(1.0, 1.0, 1.0)
+
 template<>
 struct alignas(8) Vector<2, float>
 {
