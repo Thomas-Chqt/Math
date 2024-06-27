@@ -140,4 +140,14 @@ mat4x4 mat4x4::translation(const vec3f& vals)
     );
 }
 
+mat4x4 mat4x4::scale(const vec3f& vals)
+{
+    return math::mat4x4(
+        vals.x,      0,      0, 0,
+             0, vals.y,      0, 0,
+             0,      0, vals.z, 0,
+             0,      0,      0, 1
+    );
+}
+
 }

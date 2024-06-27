@@ -24,6 +24,7 @@ namespace math
     using vec4f = float4;
     
     using rgba  = vec4f;
+    using rgb   = vec3f;
 
     // using vec2f = union{ struct{float x, y;      }; struct{float r, g;      }; };
     // using vec3f = union{ struct{float x, y, z;   }; struct{float r, g, b;   }; };
@@ -36,12 +37,19 @@ using vec2f = Vector<2, float>;
 using vec3f = Vector<3, float>;
 using vec4f = Vector<4, float>;
 using rgba  = vec4f;
+using rgb   = vec3f;
 
 #define RED   math::rgba(1.0, 0.0, 0.0, 1.0)
 #define GREEN math::rgba(0.0, 1.0, 0.0, 1.0)
 #define BLUE  math::rgba(0.0, 0.0, 1.0, 1.0)
 #define BLACK math::rgba(0.0, 0.0, 0.0, 1.0)
 #define WHITE math::rgba(1.0, 1.0, 1.0, 1.0)
+
+#define RED3   math::rgb(1.0, 0.0, 0.0)
+#define GREEN3 math::rgb(0.0, 1.0, 0.0)
+#define BLUE3  math::rgb(0.0, 0.0, 1.0)
+#define BLACK3 math::rgb(0.0, 0.0, 0.0)
+#define WHITE3 math::rgb(1.0, 1.0, 1.0)
 
 template<>
 struct alignas(8) Vector<2, float>
@@ -85,7 +93,7 @@ struct alignas(16) Vector<3, float>
     Vector(float arr[3]);
     Vector(vec2f v2f, float z);
 
-    inline vec2f xy() { return vec2f(x, y); }
+    inline vec2f xy() const { return vec2f(x, y); }
 
     float length() const;
 
@@ -120,8 +128,8 @@ struct alignas(16) Vector<4, float>
     Vector(vec2f v2f, float z, float w);
     Vector(vec3f v3f, float w);
 
-    inline vec2f xy() { return vec2f(x, y); }
-    inline vec3f xyz() { return vec3f(x, y, z); }
+    inline vec2f xy() const { return vec2f(x, y); }
+    inline vec3f xyz() const { return vec3f(x, y, z); }
 
     float length() const;
 
