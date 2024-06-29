@@ -45,6 +45,9 @@ public:
     static mat4x4 translation(const vec3f& vals);
     static mat4x4 scale(const vec3f& vals);
 
+    float determinant() const;
+    mat4x4 inversed() const;
+
 private:
     vec4f m_data[4];
 

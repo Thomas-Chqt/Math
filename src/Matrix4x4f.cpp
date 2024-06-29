@@ -9,6 +9,7 @@
 
 #include "Math/Matrix.hpp"
 #include "Math/Vector.hpp"
+#include "UtilsCPP/RuntimeError.hpp"
 #include <cmath>
 
 namespace math
@@ -41,6 +42,48 @@ mat4x4::Matrix(float x0, float x1, float x2, float x3, float y0, float y1, float
               Vector<4, float>(x2, y2, z2, w2),
               Vector<4, float>(x3, y3, z3, w3) }
 {
+}
+
+float mat4x4::determinant() const
+{
+    return m_data[0][0] * m_data[1][1] * m_data[2][2] * m_data[3][3] - m_data[0][0] * m_data[1][1] * m_data[3][2] * m_data[2][3] + m_data[0][0] * m_data[2][1] * m_data[3][2] * m_data[1][3] - m_data[0][0] * m_data[2][1] * m_data[1][2] * m_data[3][3]
+         + m_data[0][0] * m_data[3][1] * m_data[1][2] * m_data[2][3] - m_data[0][0] * m_data[3][1] * m_data[2][2] * m_data[1][3] - m_data[1][0] * m_data[2][1] * m_data[3][2] * m_data[0][3] + m_data[1][0] * m_data[2][1] * m_data[0][2] * m_data[3][3]
+         - m_data[1][0] * m_data[3][1] * m_data[0][2] * m_data[2][3] + m_data[1][0] * m_data[3][1] * m_data[2][2] * m_data[0][3] - m_data[1][0] * m_data[0][1] * m_data[2][2] * m_data[3][3] + m_data[1][0] * m_data[0][1] * m_data[3][2] * m_data[2][3]
+         + m_data[2][0] * m_data[3][1] * m_data[0][2] * m_data[1][3] - m_data[2][0] * m_data[3][1] * m_data[1][2] * m_data[0][3] + m_data[2][0] * m_data[0][1] * m_data[1][2] * m_data[3][3] - m_data[2][0] * m_data[0][1] * m_data[3][2] * m_data[1][3]
+         + m_data[2][0] * m_data[1][1] * m_data[3][2] * m_data[0][3] - m_data[2][0] * m_data[1][1] * m_data[0][2] * m_data[3][3] - m_data[3][0] * m_data[0][1] * m_data[1][2] * m_data[2][3] + m_data[3][0] * m_data[0][1] * m_data[2][2] * m_data[1][3]
+         - m_data[3][0] * m_data[1][1] * m_data[2][2] * m_data[0][3] + m_data[3][0] * m_data[1][1] * m_data[0][2] * m_data[2][3] - m_data[3][0] * m_data[2][1] * m_data[0][2] * m_data[1][3] + m_data[3][0] * m_data[2][1] * m_data[1][2] * m_data[0][3];
+}
+
+mat4x4 mat4x4::inversed() const
+{
+    const float det = determinant();
+    if(det == 0.0f)
+        throw utils::RuntimeError("matrix inversion error");
+
+    const float invdet = 1.0f / det;
+
+    mat4x4 res;
+    res.m_data[0][0] = invdet  * (m_data[1][1] * (m_data[2][2] * m_data[3][3] - m_data[3][2] * m_data[2][3]) + m_data[2][1] * (m_data[3][2] * m_data[1][3] - m_data[1][2] * m_data[3][3]) + m_data[3][1] * (m_data[1][2] * m_data[2][3] - m_data[2][2] * m_data[1][3]));
+    res.m_data[0][1] = -invdet * (m_data[0][1] * (m_data[2][2] * m_data[3][3] - m_data[3][2] * m_data[2][3]) + m_data[2][1] * (m_data[3][2] * m_data[0][3] - m_data[0][2] * m_data[3][3]) + m_data[3][1] * (m_data[0][2] * m_data[2][3] - m_data[2][2] * m_data[0][3]));
+    res.m_data[0][2] = invdet  * (m_data[0][1] * (m_data[1][2] * m_data[3][3] - m_data[3][2] * m_data[1][3]) + m_data[1][1] * (m_data[3][2] * m_data[0][3] - m_data[0][2] * m_data[3][3]) + m_data[3][1] * (m_data[0][2] * m_data[1][3] - m_data[1][2] * m_data[0][3]));
+    res.m_data[0][3] = -invdet * (m_data[0][1] * (m_data[1][2] * m_data[2][3] - m_data[2][2] * m_data[1][3]) + m_data[1][1] * (m_data[2][2] * m_data[0][3] - m_data[0][2] * m_data[2][3]) + m_data[2][1] * (m_data[0][2] * m_data[1][3] - m_data[1][2] * m_data[0][3]));
+    
+    res.m_data[1][0] = -invdet * (m_data[1][0] * (m_data[2][2] * m_data[3][3] - m_data[3][2] * m_data[2][3]) + m_data[2][0] * (m_data[3][2] * m_data[1][3] - m_data[1][2] * m_data[3][3]) + m_data[3][0] * (m_data[1][2] * m_data[2][3] - m_data[2][2] * m_data[1][3]));
+    res.m_data[1][1] = invdet  * (m_data[0][0] * (m_data[2][2] * m_data[3][3] - m_data[3][2] * m_data[2][3]) + m_data[2][0] * (m_data[3][2] * m_data[0][3] - m_data[0][2] * m_data[3][3]) + m_data[3][0] * (m_data[0][2] * m_data[2][3] - m_data[2][2] * m_data[0][3]));
+    res.m_data[1][2] = -invdet * (m_data[0][0] * (m_data[1][2] * m_data[3][3] - m_data[3][2] * m_data[1][3]) + m_data[1][0] * (m_data[3][2] * m_data[0][3] - m_data[0][2] * m_data[3][3]) + m_data[3][0] * (m_data[0][2] * m_data[1][3] - m_data[1][2] * m_data[0][3]));
+    res.m_data[1][3] = invdet  * (m_data[0][0] * (m_data[1][2] * m_data[2][3] - m_data[2][2] * m_data[1][3]) + m_data[1][0] * (m_data[2][2] * m_data[0][3] - m_data[0][2] * m_data[2][3]) + m_data[2][0] * (m_data[0][2] * m_data[1][3] - m_data[1][2] * m_data[0][3]));
+    
+    res.m_data[2][0] = invdet  * (m_data[1][0] * (m_data[2][1] * m_data[3][3] - m_data[3][1] * m_data[2][3]) + m_data[2][0] * (m_data[3][1] * m_data[1][3] - m_data[1][1] * m_data[3][3]) + m_data[3][0] * (m_data[1][1] * m_data[2][3] - m_data[2][1] * m_data[1][3]));
+    res.m_data[2][1] = -invdet * (m_data[0][0] * (m_data[2][1] * m_data[3][3] - m_data[3][1] * m_data[2][3]) + m_data[2][0] * (m_data[3][1] * m_data[0][3] - m_data[0][1] * m_data[3][3]) + m_data[3][0] * (m_data[0][1] * m_data[2][3] - m_data[2][1] * m_data[0][3]));
+    res.m_data[2][2] = invdet  * (m_data[0][0] * (m_data[1][1] * m_data[3][3] - m_data[3][1] * m_data[1][3]) + m_data[1][0] * (m_data[3][1] * m_data[0][3] - m_data[0][1] * m_data[3][3]) + m_data[3][0] * (m_data[0][1] * m_data[1][3] - m_data[1][1] * m_data[0][3]));
+    res.m_data[2][3] = -invdet * (m_data[0][0] * (m_data[1][1] * m_data[2][3] - m_data[2][1] * m_data[1][3]) + m_data[1][0] * (m_data[2][1] * m_data[0][3] - m_data[0][1] * m_data[2][3]) + m_data[2][0] * (m_data[0][1] * m_data[1][3] - m_data[1][1] * m_data[0][3]));
+    
+    res.m_data[3][0] = -invdet * (m_data[1][0] * (m_data[2][1] * m_data[3][2] - m_data[3][1] * m_data[2][2]) + m_data[2][0] * (m_data[3][1] * m_data[1][2] - m_data[1][1] * m_data[3][2]) + m_data[3][0] * (m_data[1][1] * m_data[2][2] - m_data[2][1] * m_data[1][2]));
+    res.m_data[3][1] = invdet  * (m_data[0][0] * (m_data[2][1] * m_data[3][2] - m_data[3][1] * m_data[2][2]) + m_data[2][0] * (m_data[3][1] * m_data[0][2] - m_data[0][1] * m_data[3][2]) + m_data[3][0] * (m_data[0][1] * m_data[2][2] - m_data[2][1] * m_data[0][2]));
+    res.m_data[3][2] = -invdet * (m_data[0][0] * (m_data[1][1] * m_data[3][2] - m_data[3][1] * m_data[1][2]) + m_data[1][0] * (m_data[3][1] * m_data[0][2] - m_data[0][1] * m_data[3][2]) + m_data[3][0] * (m_data[0][1] * m_data[1][2] - m_data[1][1] * m_data[0][2]));
+    res.m_data[3][3] = invdet  * (m_data[0][0] * (m_data[1][1] * m_data[2][2] - m_data[2][1] * m_data[1][2]) + m_data[1][0] * (m_data[2][1] * m_data[0][2] - m_data[0][1] * m_data[2][2]) + m_data[2][0] * (m_data[0][1] * m_data[1][2] - m_data[1][1] * m_data[0][2]));
+
+    return res;
 }
 
 vec4f& mat4x4::operator[](utils::uint8 idx)
@@ -127,7 +170,7 @@ mat4x4 mat4x4::rotation(const vec3f& rads)
                   0,            0, 0, 1
     );
 
-    return rotX * rotY * rotZ;
+    return rotY * rotX * rotZ;
 }
 
 mat4x4 mat4x4::translation(const vec3f& vals)

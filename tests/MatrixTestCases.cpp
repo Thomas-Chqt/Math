@@ -87,4 +87,53 @@ TEST(MatrixTest, rotation)
     }
 }
 
+TEST(MatrixTest, inverse)
+{
+    {
+        mat4x4 original(
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1
+        );
+        mat4x4 expected(
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1
+        );
+        EXPECT_EQ(original.inversed(), expected);
+    }
+    {
+        mat4x4 original(
+            1, 0, 0, 1,
+            0, 1, 0, 1,
+            0, 0, 1, 1,
+            0, 0, 0, 1
+        );
+        mat4x4 expected(
+            1, 0, 0, -1,
+            0, 1, 0, -1,
+            0, 0, 1, -1,
+            0, 0, 0,  1
+        );
+        EXPECT_EQ(original.inversed(), expected);
+    }
+    {
+        mat4x4 original(
+            2, 0, 0, 0,
+            0, 2, 0, 0,
+            0, 0, 2, 0,
+            0, 0, 0, 2
+        );
+        mat4x4 expected(
+            0.5, 0,   0,   0,
+            0,   0.5, 0,   0,
+            0,   0,   0.5, 0,
+            0,   0,   0,   0.5
+        );
+        EXPECT_EQ(original.inversed(), expected);
+    }
+}
+
 }
