@@ -15,6 +15,10 @@
     #include "UtilsCPP/Types.hpp"
 #endif // __METAL_VERSION__
 
+#define TYPEID_VEC2F 100
+#define TYPEID_VEC3F 101
+#define TYPEID_VEC4F 102
+
 namespace math
 {
 

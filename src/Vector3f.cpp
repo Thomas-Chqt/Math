@@ -8,6 +8,7 @@
  */
 
 #include "Math/Vector.hpp"
+#include "UtilsCPP/StructLayout.hpp"
 #include "UtilsCPP/Types.hpp"
 #include <cmath>
 #include <cstdlib>
@@ -85,4 +86,10 @@ vec3f cross(const vec3f& lhs, const vec3f& rhs)
     );
 }
 
+}
+
+namespace utils
+{
+    template<> utils::StructLayout getLayout<math::vec3f>() { return utils::StructLayout(); }
+    template<> utils::uint32 getTypeID<math::vec3f>() { return TYPEID_VEC3F; }
 }

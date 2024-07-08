@@ -8,6 +8,7 @@
  */
 
 #include "Math/Vector.hpp"
+#include "UtilsCPP/StructLayout.hpp"
 #include "UtilsCPP/Types.hpp"
 #include <cmath>
 #include <cstdlib>
@@ -65,4 +66,10 @@ const float& vec2f::operator[](uint8 idx) const
     }
 }
 
+}
+
+namespace utils
+{
+    template<> utils::StructLayout getLayout<math::vec2f>() { return utils::StructLayout(); }
+    template<> utils::uint32 getTypeID<math::vec2f>() { return TYPEID_VEC2F; }
 }

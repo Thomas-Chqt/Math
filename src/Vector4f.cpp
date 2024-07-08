@@ -8,6 +8,7 @@
  */
 
 #include "Math/Vector.hpp"
+#include "UtilsCPP/StructLayout.hpp"
 #include "UtilsCPP/Types.hpp"
 #include <cmath>
 #include <cstdlib>
@@ -87,4 +88,10 @@ const float& vec4f::operator[](uint8 idx) const
     }
 }
 
+}
+
+namespace utils
+{
+    template<> utils::StructLayout getLayout<math::vec4f>() { return utils::StructLayout(); }
+    template<> utils::uint32 getTypeID<math::vec4f>() { return TYPEID_VEC4F; }
 }
