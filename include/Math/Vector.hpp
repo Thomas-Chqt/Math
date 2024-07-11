@@ -15,6 +15,10 @@
     #include "UtilsCPP/Types.hpp"
 #endif // __METAL_VERSION__
 
+#define METAL_FLOAT2_ALIGNEMENT 8
+#define METAL_FLOAT3_ALIGNEMENT 16
+#define METAL_FLOAT4_ALIGNEMENT 16
+
 namespace math
 {
 
@@ -52,10 +56,10 @@ using rgb   = vec3f;
 #define WHITE3 math::rgb(1.0, 1.0, 1.0)
 
 template<>
-struct alignas(8) Vector<2, float>
+struct alignas(METAL_FLOAT2_ALIGNEMENT) Vector<2, float>
 {
-    float x = 0;
-    float y = 0;
+    float x = 0; // NOLINT(misc-non-private-member-variables-in-classes)
+    float y = 0; // NOLINT(misc-non-private-member-variables-in-classes)
 
     Vector()              = default;
     Vector(const Vector&) = default;
@@ -69,6 +73,8 @@ struct alignas(8) Vector<2, float>
     void normalize();
     Vector normalized() const;
 
+    ~Vector() = default;
+
     Vector& operator = (const Vector&) = default;
     Vector& operator = (Vector&&)      = default;
 
@@ -77,9 +83,9 @@ struct alignas(8) Vector<2, float>
 };
 
 template<>
-struct alignas(16) Vector<3, float>
+struct alignas(METAL_FLOAT3_ALIGNEMENT) Vector<3, float>
 {
-    union
+    union // NOLINT(misc-non-private-member-variables-in-classes)
     {
         struct{ float x, y, z; };
         struct{ float r, g, b; };
@@ -91,10 +97,7 @@ struct alignas(16) Vector<3, float>
 
     Vector(float x, float y, float z);
     explicit Vector(float arr[3]);
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "NotImplementedFunctions"
     Vector(vec2f xy, float z);
-#pragma clang diagnostic pop
 
     inline vec2f xy() const { return {x, y}; }
 
@@ -102,6 +105,8 @@ struct alignas(16) Vector<3, float>
 
     void normalize();
     Vector normalized() const;
+
+    ~Vector() = default;
 
     Vector& operator = (const Vector&) = default;
     Vector& operator = (Vector&&)      = default;
@@ -113,9 +118,9 @@ struct alignas(16) Vector<3, float>
 vec3f cross(const vec3f&, const vec3f&);
 
 template<>
-struct alignas(16) Vector<4, float>
+struct alignas(METAL_FLOAT4_ALIGNEMENT) Vector<4, float>
 {
-    union
+    union // NOLINT(misc-non-private-member-variables-in-classes)
     {
         struct{ float x, y, z, w; };
         struct{ float r, g, b, a; };
@@ -127,12 +132,9 @@ struct alignas(16) Vector<4, float>
 
     Vector(float x, float y, float z, float w);
     explicit Vector(float arr[4]);
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "NotImplementedFunctions"
     Vector(vec3f xyz, float w);
     Vector(vec2f xy,  float z, float w);
     Vector(vec2f xy,  vec2f zw);
-#pragma clang diagnostic pop
 
     inline vec2f xy() const { return {x, y}; }
     inline vec3f xyz() const { return {x, y, z}; }
@@ -141,6 +143,8 @@ struct alignas(16) Vector<4, float>
 
     void normalize();
     Vector normalized() const;
+
+    ~Vector() = default;
 
     Vector& operator = (const Vector&) = default;
     Vector& operator = (Vector&&)      = default;

@@ -15,19 +15,19 @@
 namespace math
 {
 
-vec3f::Vector() : x(0), y(0), z(0) // NOLINT(*-pro-type-member-init)
+vec3f::Vector() : x(0), y(0), z(0) // NOLINT(cppcoreguidelines-pro-type-member-init)
 {
 }
 
-vec3f::Vector(float x, float y, float z) : x(x), y(y), z(z) // NOLINT(*-pro-type-member-init)
+vec3f::Vector(float x, float y, float z) : x(x), y(y), z(z) // NOLINT(bugprone-easily-swappable-parameters, cppcoreguidelines-pro-type-member-init)
 {
 }
 
-vec3f::Vector(float arr[3]) : x(arr[0]), y(arr[1]), z(arr[2]) // NOLINT(*-pro-type-member-init)
+vec3f::Vector(float arr[3]) : x(arr[0]), y(arr[1]), z(arr[2]) // NOLINT(cppcoreguidelines-pro-type-member-init)
 {
 }
 
-vec3f::Vector(vec2f xy, float z) : x(xy.x), y(xy.y), z(z) // NOLINT(*-pro-type-member-init)
+vec3f::Vector(vec2f xy, float z) : x(xy.x), y(xy.y), z(z) // NOLINT(cppcoreguidelines-pro-type-member-init)
 {
 }
 

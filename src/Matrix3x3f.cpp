@@ -9,6 +9,7 @@
 
 #include "Math/Matrix.hpp"
 #include "Math/Vector.hpp"
+#include "UtilsCPP/RuntimeError.hpp"
 
 namespace math
 {
@@ -39,14 +40,18 @@ mat3x3::Matrix(float x0, float x1, float x2, float y0, float y1, float y2, float
 {
 }
 
-vec3f& mat3x3::operator[](utils::uint8 idx)
+vec3f& mat3x3::operator [] (utils::uint8 idx)
 {
-    return m_data[idx];
+    if (idx >= 3)
+        throw utils::RuntimeError("out of bound");
+    return m_data[idx]; // NOLINT(cppcoreguidelines-pro-bounds-constant-array-index)
 }
 
-const vec3f& mat3x3::operator[](utils::uint8 idx) const
+const vec3f& mat3x3::operator [] (utils::uint8 idx) const
 {
-    return m_data[idx];
+    if (idx >= 3)
+        throw utils::RuntimeError("out of bound");
+    return m_data[idx]; // NOLINT(cppcoreguidelines-pro-bounds-constant-array-index)
 }
 
 template<>

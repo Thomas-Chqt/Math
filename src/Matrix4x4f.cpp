@@ -57,10 +57,10 @@ float mat4x4::determinant() const
 mat4x4 mat4x4::inversed() const
 {
     const float det = determinant();
-    if(det == 0.0f)
+    if(det == 0.0F)
         throw utils::RuntimeError("matrix inversion error");
 
-    const float invdet = 1.0f / det;
+    const float invdet = 1.0F / det;
 
     mat4x4 res;
     res.m_data[0][0] = invdet  * (m_data[1][1] * (m_data[2][2] * m_data[3][3] - m_data[3][2] * m_data[2][3]) + m_data[2][1] * (m_data[3][2] * m_data[1][3] - m_data[1][2] * m_data[3][3]) + m_data[3][1] * (m_data[1][2] * m_data[2][3] - m_data[2][2] * m_data[1][3]));
@@ -88,12 +88,16 @@ mat4x4 mat4x4::inversed() const
 
 vec4f& mat4x4::operator[](utils::uint8 idx)
 {
-    return m_data[idx];
+    if (idx >= 4)
+        throw utils::RuntimeError("out of bound");
+    return m_data[idx]; // NOLINT(cppcoreguidelines-pro-bounds-constant-array-index)
 }
 
 const vec4f& mat4x4::operator[](utils::uint8 idx) const
 {
-    return m_data[idx];
+    if (idx >= 4)
+        throw utils::RuntimeError("out of bound");
+    return m_data[idx]; // NOLINT(cppcoreguidelines-pro-bounds-constant-array-index)
 }
 
 template<>
