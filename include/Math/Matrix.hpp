@@ -29,7 +29,7 @@ public:
     Matrix(const Matrix&) = default;
     Matrix(Matrix&&)      = default;
 
-    Matrix(float s);
+    explicit Matrix(float s);
 
     Matrix(const vec4f& v1,
            const vec4f& v2,
@@ -67,7 +67,7 @@ public:
     Matrix(const Matrix&) = default;
     Matrix(Matrix&&)      = default;
 
-    Matrix(float s);
+    explicit Matrix(float s);
 
     Matrix(const vec3f& v1,
            const vec3f& v2,

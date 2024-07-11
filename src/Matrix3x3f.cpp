@@ -52,27 +52,27 @@ const vec3f& mat3x3::operator[](utils::uint8 idx) const
 template<>
 vec3f operator * (const vec3f& v, const mat3x3& m)
 {
-    return vec3f(
+    return {
         m[0][0] * v.x + m[0][1] * v.y + m[0][2] * v.z,
         m[1][0] * v.x + m[1][1] * v.y + m[1][2] * v.z,
         m[2][0] * v.x + m[2][1] * v.y + m[2][2] * v.z
-    );
+    };
 }
 
 template<>
 vec3f operator * (const mat3x3& m, const vec3f& v)
 {
-    return vec3f(
+    return {
         m[0][0] * v.x + m[1][0] * v.y + m[2][0] * v.z,
         m[0][1] * v.x + m[1][1] * v.y + m[2][1] * v.z,
         m[0][2] * v.x + m[1][2] * v.y + m[2][2] * v.z
-    );
+    };
 }
 
 template<>
 mat3x3 operator * (const mat3x3& lhs, const mat3x3& rhs)
 {
-    return mat3x3(
+    return {
         lhs[0][0] * rhs[0][0] + lhs[1][0] * rhs[0][1] + lhs[2][0] * rhs[0][2],
         lhs[0][0] * rhs[1][0] + lhs[1][0] * rhs[1][1] + lhs[2][0] * rhs[1][2],
         lhs[0][0] * rhs[2][0] + lhs[1][0] * rhs[2][1] + lhs[2][0] * rhs[2][2],
@@ -84,7 +84,7 @@ mat3x3 operator * (const mat3x3& lhs, const mat3x3& rhs)
         lhs[0][2] * rhs[0][0] + lhs[1][2] * rhs[0][1] + lhs[2][2] * rhs[0][2],
         lhs[0][2] * rhs[1][0] + lhs[1][2] * rhs[1][1] + lhs[2][2] * rhs[1][2],
         lhs[0][2] * rhs[2][0] + lhs[1][2] * rhs[2][1] + lhs[2][2] * rhs[2][2]
-    );
+    };
 }
 
 }

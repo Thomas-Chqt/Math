@@ -15,10 +15,6 @@
     #include "UtilsCPP/Types.hpp"
 #endif // __METAL_VERSION__
 
-#define TYPEID_VEC2F 100
-#define TYPEID_VEC3F 101
-#define TYPEID_VEC4F 102
-
 namespace math
 {
 
@@ -66,7 +62,7 @@ struct alignas(8) Vector<2, float>
     Vector(Vector&&)      = default;
 
     Vector(float x, float y);
-    Vector(float arr[2]);
+    explicit Vector(float arr[2]);
 
     float length() const;
 
@@ -94,10 +90,13 @@ struct alignas(16) Vector<3, float>
     Vector(Vector&&)      = default;
 
     Vector(float x, float y, float z);
-    Vector(float arr[3]);
-    Vector(vec2f v2f, float z);
+    explicit Vector(float arr[3]);
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "NotImplementedFunctions"
+    Vector(vec2f xy, float z);
+#pragma clang diagnostic pop
 
-    inline vec2f xy() const { return vec2f(x, y); }
+    inline vec2f xy() const { return {x, y}; }
 
     float length() const;
 
@@ -127,13 +126,16 @@ struct alignas(16) Vector<4, float>
     Vector(Vector&&)      = default;
 
     Vector(float x, float y, float z, float w);
-    Vector(float arr[4]);
-    Vector(vec2f v2fa, vec2f v2fb);
-    Vector(vec2f v2f, float z, float w);
-    Vector(vec3f v3f, float w);
+    explicit Vector(float arr[4]);
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "NotImplementedFunctions"
+    Vector(vec3f xyz, float w);
+    Vector(vec2f xy,  float z, float w);
+    Vector(vec2f xy,  vec2f zw);
+#pragma clang diagnostic pop
 
-    inline vec2f xy() const { return vec2f(x, y); }
-    inline vec3f xyz() const { return vec3f(x, y, z); }
+    inline vec2f xy() const { return {x, y}; }
+    inline vec3f xyz() const { return {x, y, z}; }
 
     float length() const;
 

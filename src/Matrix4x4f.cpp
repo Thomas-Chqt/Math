@@ -99,29 +99,29 @@ const vec4f& mat4x4::operator[](utils::uint8 idx) const
 template<>
 vec4f operator * (const vec4f& v, const mat4x4& m)
 {
-    return vec4f(
+    return {
         m[0][0] * v.x + m[0][1] * v.y + m[0][2] * v.z + m[0][3] * v.w,
         m[1][0] * v.x + m[1][1] * v.y + m[1][2] * v.z + m[1][3] * v.w,
         m[2][0] * v.x + m[2][1] * v.y + m[2][2] * v.z + m[2][3] * v.w,
         m[3][0] * v.x + m[3][1] * v.y + m[3][2] * v.z + m[3][3] * v.w
-    );
+    };
 }
 
 template<>
 vec4f operator * (const mat4x4& m, const vec4f& v)
 {
-    return vec4f(
+    return {
         m[0][0] * v.x + m[1][0] * v.y + m[2][0] * v.z + m[3][0] * v.w,
         m[0][1] * v.x + m[1][1] * v.y + m[2][1] * v.z + m[3][1] * v.w,
         m[0][2] * v.x + m[1][2] * v.y + m[2][2] * v.z + m[3][2] * v.w,
         m[0][3] * v.x + m[1][3] * v.y + m[2][3] * v.z + m[3][3] * v.w
-    );
+    };
 }
 
 template<>
 mat4x4 operator * (const mat4x4& lhs, const mat4x4& rhs)
 {
-    return mat4x4(
+    return {
         lhs[0][0] * rhs[0][0] + lhs[1][0] * rhs[0][1] + lhs[2][0] * rhs[0][2] + lhs[3][0] * rhs[0][3],
         lhs[0][0] * rhs[1][0] + lhs[1][0] * rhs[1][1] + lhs[2][0] * rhs[1][2] + lhs[3][0] * rhs[1][3],
         lhs[0][0] * rhs[2][0] + lhs[1][0] * rhs[2][1] + lhs[2][0] * rhs[2][2] + lhs[3][0] * rhs[2][3],
@@ -141,7 +141,7 @@ mat4x4 operator * (const mat4x4& lhs, const mat4x4& rhs)
         lhs[0][3] * rhs[1][0] + lhs[1][3] * rhs[1][1] + lhs[2][3] * rhs[1][2] + lhs[3][3] * rhs[1][3],
         lhs[0][3] * rhs[2][0] + lhs[1][3] * rhs[2][1] + lhs[2][3] * rhs[2][2] + lhs[3][3] * rhs[2][3],
         lhs[0][3] * rhs[3][0] + lhs[1][3] * rhs[3][1] + lhs[2][3] * rhs[3][2] + lhs[3][3] * rhs[3][3]
-    );
+    };
 }
 
 mat4x4 mat4x4::rotation(const vec3f& rads)
@@ -175,22 +175,22 @@ mat4x4 mat4x4::rotation(const vec3f& rads)
 
 mat4x4 mat4x4::translation(const vec3f& vals)
 {
-    return math::mat4x4(
+    return {
         1, 0, 0, vals.x,
         0, 1, 0, vals.y,
         0, 0, 1, vals.z,
         0, 0, 0,      1
-    );
+    };
 }
 
 mat4x4 mat4x4::scale(const vec3f& vals)
 {
-    return math::mat4x4(
+    return {
         vals.x,      0,      0, 0,
              0, vals.y,      0, 0,
              0,      0, vals.z, 0,
              0,      0,      0, 1
-    );
+    };
 }
 
 }
