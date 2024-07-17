@@ -44,6 +44,14 @@ mat4x4::Matrix(float x0, float x1, float x2, float x3, float y0, float y1, float
 {
 }
 
+mat4x4::Matrix(const mat3x3& mat)
+    : m_data { vec4f(mat[0],  0),
+               vec4f(mat[1],  0),
+               vec4f(mat[2],  0),
+               vec4f(0, 0, 0, 1) }
+{
+}
+
 float mat4x4::determinant() const
 {
     return m_data[0][0] * m_data[1][1] * m_data[2][2] * m_data[3][3] - m_data[0][0] * m_data[1][1] * m_data[3][2] * m_data[2][3] + m_data[0][0] * m_data[2][1] * m_data[3][2] * m_data[1][3] - m_data[0][0] * m_data[2][1] * m_data[1][2] * m_data[3][3]

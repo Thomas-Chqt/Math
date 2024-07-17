@@ -41,6 +41,8 @@ public:
            float y0, float y1, float y2,
            float z0, float z1, float z2);
 
+    Matrix(const mat4x4&);
+
     ~Matrix() = default;
 
 private:
@@ -62,7 +64,7 @@ public:
     Matrix(const Matrix&) = default;
     Matrix(Matrix&&)      = default;
 
-    explicit Matrix(float s);
+    Matrix(float s);
 
     Matrix(const vec4f& v1,
            const vec4f& v2,
@@ -73,6 +75,8 @@ public:
            float y0, float y1, float y2, float y3,
            float z0, float z1, float z2, float z3,
            float w0, float w1, float w2, float w3);
+
+    Matrix(const mat3x3&);
 
     static mat4x4 rotation(const vec3f& rads);
     static mat4x4 translation(const vec3f& vals);

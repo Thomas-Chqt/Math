@@ -40,6 +40,13 @@ mat3x3::Matrix(float x0, float x1, float x2, float y0, float y1, float y2, float
 {
 }
 
+mat3x3::Matrix(const mat4x4& mat)
+    : m_data{ vec3f(mat[0].xyz()),
+              vec3f(mat[1].xyz()),
+              vec3f(mat[2].xyz()) }
+{
+}
+
 vec3f& mat3x3::operator [] (utils::uint8 idx)
 {
     if (idx >= 3)
