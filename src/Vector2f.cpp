@@ -17,7 +17,7 @@ using utils::uint8;
 namespace math
 {
 
-vec2f::Vector(float x, float y) : x(x), y(y)
+vec2f::Vector(float x, float y) : x(x), y(y) //NOLINT(bugprone-easily-swappable-parameters)
 {
 }
 

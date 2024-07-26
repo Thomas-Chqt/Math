@@ -12,24 +12,22 @@
 #include <cmath>
 #include <cstdlib>
 
-using utils::uint8;
-
 namespace math
 {
 
-vec3f::Vector() : x(0), y(0), z(0)
+vec3f::Vector() : x(0), y(0), z(0) // NOLINT(cppcoreguidelines-pro-type-member-init)
 {
 }
 
-vec3f::Vector(float x, float y, float z) : x(x), y(y), z(z)
+vec3f::Vector(float x, float y, float z) : x(x), y(y), z(z) // NOLINT(bugprone-easily-swappable-parameters, cppcoreguidelines-pro-type-member-init)
 {
 }
 
-vec3f::Vector(float arr[3]) : x(arr[0]), y(arr[1]), z(arr[2])
+vec3f::Vector(float arr[3]) : x(arr[0]), y(arr[1]), z(arr[2]) // NOLINT(cppcoreguidelines-pro-type-member-init)
 {
 }
 
-vec3f::Vector(vec2f v2f, float z) : x(v2f.x), y(v2f.y), z(z)
+vec3f::Vector(vec2f xy, float z) : x(xy.x), y(xy.y), z(z) // NOLINT(cppcoreguidelines-pro-type-member-init)
 {
 }
 
@@ -54,7 +52,7 @@ vec3f vec3f::normalized() const
     return v;
 }
 
-float& vec3f::operator[](uint8 idx)
+float& vec3f::operator[](utils::uint8 idx)
 {
     switch (idx)
     {
@@ -65,7 +63,7 @@ float& vec3f::operator[](uint8 idx)
     }
 }
 
-const float& vec3f::operator[](uint8 idx) const
+const float& vec3f::operator[](utils::uint8 idx) const
 {
     switch (idx)
     {
@@ -78,11 +76,11 @@ const float& vec3f::operator[](uint8 idx) const
 
 vec3f cross(const vec3f& lhs, const vec3f& rhs)
 {
-    return vec3f(
+    return {
         lhs.y * rhs.z - lhs.z * rhs.y,
         lhs.z * rhs.x - lhs.x * rhs.z,
         lhs.x * rhs.y - lhs.y * rhs.x
-    );
+    };
 }
 
 }

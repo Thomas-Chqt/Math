@@ -9,6 +9,7 @@
 
 #include "Math/Matrix.hpp"
 #include "Math/Vector.hpp"
+#include "UtilsCPP/RuntimeError.hpp"
 #include <cmath>
 
 namespace math
@@ -43,42 +44,96 @@ mat4x4::Matrix(float x0, float x1, float x2, float x3, float y0, float y1, float
 {
 }
 
+mat4x4::Matrix(const mat3x3& mat)
+    : m_data { vec4f(mat[0],  0),
+               vec4f(mat[1],  0),
+               vec4f(mat[2],  0),
+               vec4f(0, 0, 0, 1) }
+{
+}
+
+float mat4x4::determinant() const
+{
+    return m_data[0][0] * m_data[1][1] * m_data[2][2] * m_data[3][3] - m_data[0][0] * m_data[1][1] * m_data[3][2] * m_data[2][3] + m_data[0][0] * m_data[2][1] * m_data[3][2] * m_data[1][3] - m_data[0][0] * m_data[2][1] * m_data[1][2] * m_data[3][3]
+         + m_data[0][0] * m_data[3][1] * m_data[1][2] * m_data[2][3] - m_data[0][0] * m_data[3][1] * m_data[2][2] * m_data[1][3] - m_data[1][0] * m_data[2][1] * m_data[3][2] * m_data[0][3] + m_data[1][0] * m_data[2][1] * m_data[0][2] * m_data[3][3]
+         - m_data[1][0] * m_data[3][1] * m_data[0][2] * m_data[2][3] + m_data[1][0] * m_data[3][1] * m_data[2][2] * m_data[0][3] - m_data[1][0] * m_data[0][1] * m_data[2][2] * m_data[3][3] + m_data[1][0] * m_data[0][1] * m_data[3][2] * m_data[2][3]
+         + m_data[2][0] * m_data[3][1] * m_data[0][2] * m_data[1][3] - m_data[2][0] * m_data[3][1] * m_data[1][2] * m_data[0][3] + m_data[2][0] * m_data[0][1] * m_data[1][2] * m_data[3][3] - m_data[2][0] * m_data[0][1] * m_data[3][2] * m_data[1][3]
+         + m_data[2][0] * m_data[1][1] * m_data[3][2] * m_data[0][3] - m_data[2][0] * m_data[1][1] * m_data[0][2] * m_data[3][3] - m_data[3][0] * m_data[0][1] * m_data[1][2] * m_data[2][3] + m_data[3][0] * m_data[0][1] * m_data[2][2] * m_data[1][3]
+         - m_data[3][0] * m_data[1][1] * m_data[2][2] * m_data[0][3] + m_data[3][0] * m_data[1][1] * m_data[0][2] * m_data[2][3] - m_data[3][0] * m_data[2][1] * m_data[0][2] * m_data[1][3] + m_data[3][0] * m_data[2][1] * m_data[1][2] * m_data[0][3];
+}
+
+mat4x4 mat4x4::inversed() const
+{
+    const float det = determinant();
+    if(det == 0.0F)
+        throw utils::RuntimeError("matrix inversion error");
+
+    const float invdet = 1.0F / det;
+
+    mat4x4 res;
+    res.m_data[0][0] = invdet  * (m_data[1][1] * (m_data[2][2] * m_data[3][3] - m_data[3][2] * m_data[2][3]) + m_data[2][1] * (m_data[3][2] * m_data[1][3] - m_data[1][2] * m_data[3][3]) + m_data[3][1] * (m_data[1][2] * m_data[2][3] - m_data[2][2] * m_data[1][3]));
+    res.m_data[0][1] = -invdet * (m_data[0][1] * (m_data[2][2] * m_data[3][3] - m_data[3][2] * m_data[2][3]) + m_data[2][1] * (m_data[3][2] * m_data[0][3] - m_data[0][2] * m_data[3][3]) + m_data[3][1] * (m_data[0][2] * m_data[2][3] - m_data[2][2] * m_data[0][3]));
+    res.m_data[0][2] = invdet  * (m_data[0][1] * (m_data[1][2] * m_data[3][3] - m_data[3][2] * m_data[1][3]) + m_data[1][1] * (m_data[3][2] * m_data[0][3] - m_data[0][2] * m_data[3][3]) + m_data[3][1] * (m_data[0][2] * m_data[1][3] - m_data[1][2] * m_data[0][3]));
+    res.m_data[0][3] = -invdet * (m_data[0][1] * (m_data[1][2] * m_data[2][3] - m_data[2][2] * m_data[1][3]) + m_data[1][1] * (m_data[2][2] * m_data[0][3] - m_data[0][2] * m_data[2][3]) + m_data[2][1] * (m_data[0][2] * m_data[1][3] - m_data[1][2] * m_data[0][3]));
+    
+    res.m_data[1][0] = -invdet * (m_data[1][0] * (m_data[2][2] * m_data[3][3] - m_data[3][2] * m_data[2][3]) + m_data[2][0] * (m_data[3][2] * m_data[1][3] - m_data[1][2] * m_data[3][3]) + m_data[3][0] * (m_data[1][2] * m_data[2][3] - m_data[2][2] * m_data[1][3]));
+    res.m_data[1][1] = invdet  * (m_data[0][0] * (m_data[2][2] * m_data[3][3] - m_data[3][2] * m_data[2][3]) + m_data[2][0] * (m_data[3][2] * m_data[0][3] - m_data[0][2] * m_data[3][3]) + m_data[3][0] * (m_data[0][2] * m_data[2][3] - m_data[2][2] * m_data[0][3]));
+    res.m_data[1][2] = -invdet * (m_data[0][0] * (m_data[1][2] * m_data[3][3] - m_data[3][2] * m_data[1][3]) + m_data[1][0] * (m_data[3][2] * m_data[0][3] - m_data[0][2] * m_data[3][3]) + m_data[3][0] * (m_data[0][2] * m_data[1][3] - m_data[1][2] * m_data[0][3]));
+    res.m_data[1][3] = invdet  * (m_data[0][0] * (m_data[1][2] * m_data[2][3] - m_data[2][2] * m_data[1][3]) + m_data[1][0] * (m_data[2][2] * m_data[0][3] - m_data[0][2] * m_data[2][3]) + m_data[2][0] * (m_data[0][2] * m_data[1][3] - m_data[1][2] * m_data[0][3]));
+    
+    res.m_data[2][0] = invdet  * (m_data[1][0] * (m_data[2][1] * m_data[3][3] - m_data[3][1] * m_data[2][3]) + m_data[2][0] * (m_data[3][1] * m_data[1][3] - m_data[1][1] * m_data[3][3]) + m_data[3][0] * (m_data[1][1] * m_data[2][3] - m_data[2][1] * m_data[1][3]));
+    res.m_data[2][1] = -invdet * (m_data[0][0] * (m_data[2][1] * m_data[3][3] - m_data[3][1] * m_data[2][3]) + m_data[2][0] * (m_data[3][1] * m_data[0][3] - m_data[0][1] * m_data[3][3]) + m_data[3][0] * (m_data[0][1] * m_data[2][3] - m_data[2][1] * m_data[0][3]));
+    res.m_data[2][2] = invdet  * (m_data[0][0] * (m_data[1][1] * m_data[3][3] - m_data[3][1] * m_data[1][3]) + m_data[1][0] * (m_data[3][1] * m_data[0][3] - m_data[0][1] * m_data[3][3]) + m_data[3][0] * (m_data[0][1] * m_data[1][3] - m_data[1][1] * m_data[0][3]));
+    res.m_data[2][3] = -invdet * (m_data[0][0] * (m_data[1][1] * m_data[2][3] - m_data[2][1] * m_data[1][3]) + m_data[1][0] * (m_data[2][1] * m_data[0][3] - m_data[0][1] * m_data[2][3]) + m_data[2][0] * (m_data[0][1] * m_data[1][3] - m_data[1][1] * m_data[0][3]));
+    
+    res.m_data[3][0] = -invdet * (m_data[1][0] * (m_data[2][1] * m_data[3][2] - m_data[3][1] * m_data[2][2]) + m_data[2][0] * (m_data[3][1] * m_data[1][2] - m_data[1][1] * m_data[3][2]) + m_data[3][0] * (m_data[1][1] * m_data[2][2] - m_data[2][1] * m_data[1][2]));
+    res.m_data[3][1] = invdet  * (m_data[0][0] * (m_data[2][1] * m_data[3][2] - m_data[3][1] * m_data[2][2]) + m_data[2][0] * (m_data[3][1] * m_data[0][2] - m_data[0][1] * m_data[3][2]) + m_data[3][0] * (m_data[0][1] * m_data[2][2] - m_data[2][1] * m_data[0][2]));
+    res.m_data[3][2] = -invdet * (m_data[0][0] * (m_data[1][1] * m_data[3][2] - m_data[3][1] * m_data[1][2]) + m_data[1][0] * (m_data[3][1] * m_data[0][2] - m_data[0][1] * m_data[3][2]) + m_data[3][0] * (m_data[0][1] * m_data[1][2] - m_data[1][1] * m_data[0][2]));
+    res.m_data[3][3] = invdet  * (m_data[0][0] * (m_data[1][1] * m_data[2][2] - m_data[2][1] * m_data[1][2]) + m_data[1][0] * (m_data[2][1] * m_data[0][2] - m_data[0][1] * m_data[2][2]) + m_data[2][0] * (m_data[0][1] * m_data[1][2] - m_data[1][1] * m_data[0][2]));
+
+    return res;
+}
+
 vec4f& mat4x4::operator[](utils::uint8 idx)
 {
-    return m_data[idx];
+    if (idx >= 4)
+        throw utils::RuntimeError("out of bound");
+    return m_data[idx]; // NOLINT(cppcoreguidelines-pro-bounds-constant-array-index)
 }
 
 const vec4f& mat4x4::operator[](utils::uint8 idx) const
 {
-    return m_data[idx];
+    if (idx >= 4)
+        throw utils::RuntimeError("out of bound");
+    return m_data[idx]; // NOLINT(cppcoreguidelines-pro-bounds-constant-array-index)
 }
 
 template<>
 vec4f operator * (const vec4f& v, const mat4x4& m)
 {
-    return vec4f(
+    return {
         m[0][0] * v.x + m[0][1] * v.y + m[0][2] * v.z + m[0][3] * v.w,
         m[1][0] * v.x + m[1][1] * v.y + m[1][2] * v.z + m[1][3] * v.w,
         m[2][0] * v.x + m[2][1] * v.y + m[2][2] * v.z + m[2][3] * v.w,
         m[3][0] * v.x + m[3][1] * v.y + m[3][2] * v.z + m[3][3] * v.w
-    );
+    };
 }
 
 template<>
 vec4f operator * (const mat4x4& m, const vec4f& v)
 {
-    return vec4f(
+    return {
         m[0][0] * v.x + m[1][0] * v.y + m[2][0] * v.z + m[3][0] * v.w,
         m[0][1] * v.x + m[1][1] * v.y + m[2][1] * v.z + m[3][1] * v.w,
         m[0][2] * v.x + m[1][2] * v.y + m[2][2] * v.z + m[3][2] * v.w,
         m[0][3] * v.x + m[1][3] * v.y + m[2][3] * v.z + m[3][3] * v.w
-    );
+    };
 }
 
 template<>
 mat4x4 operator * (const mat4x4& lhs, const mat4x4& rhs)
 {
-    return mat4x4(
+    return {
         lhs[0][0] * rhs[0][0] + lhs[1][0] * rhs[0][1] + lhs[2][0] * rhs[0][2] + lhs[3][0] * rhs[0][3],
         lhs[0][0] * rhs[1][0] + lhs[1][0] * rhs[1][1] + lhs[2][0] * rhs[1][2] + lhs[3][0] * rhs[1][3],
         lhs[0][0] * rhs[2][0] + lhs[1][0] * rhs[2][1] + lhs[2][0] * rhs[2][2] + lhs[3][0] * rhs[2][3],
@@ -98,7 +153,7 @@ mat4x4 operator * (const mat4x4& lhs, const mat4x4& rhs)
         lhs[0][3] * rhs[1][0] + lhs[1][3] * rhs[1][1] + lhs[2][3] * rhs[1][2] + lhs[3][3] * rhs[1][3],
         lhs[0][3] * rhs[2][0] + lhs[1][3] * rhs[2][1] + lhs[2][3] * rhs[2][2] + lhs[3][3] * rhs[2][3],
         lhs[0][3] * rhs[3][0] + lhs[1][3] * rhs[3][1] + lhs[2][3] * rhs[3][2] + lhs[3][3] * rhs[3][3]
-    );
+    };
 }
 
 mat4x4 mat4x4::rotation(const vec3f& rads)
@@ -127,27 +182,27 @@ mat4x4 mat4x4::rotation(const vec3f& rads)
                   0,            0, 0, 1
     );
 
-    return rotX * rotY * rotZ;
+    return rotY * rotX * rotZ;
 }
 
 mat4x4 mat4x4::translation(const vec3f& vals)
 {
-    return math::mat4x4(
+    return {
         1, 0, 0, vals.x,
         0, 1, 0, vals.y,
         0, 0, 1, vals.z,
         0, 0, 0,      1
-    );
+    };
 }
 
 mat4x4 mat4x4::scale(const vec3f& vals)
 {
-    return math::mat4x4(
+    return {
         vals.x,      0,      0, 0,
              0, vals.y,      0, 0,
              0,      0, vals.z, 0,
              0,      0,      0, 1
-    );
+    };
 }
 
 }

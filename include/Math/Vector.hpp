@@ -15,6 +15,10 @@
     #include "UtilsCPP/Types.hpp"
 #endif // __METAL_VERSION__
 
+#define METAL_FLOAT2_ALIGNEMENT 8
+#define METAL_FLOAT3_ALIGNEMENT 16
+#define METAL_FLOAT4_ALIGNEMENT 16
+
 namespace math
 {
 
@@ -52,22 +56,24 @@ using rgb   = vec3f;
 #define WHITE3 math::rgb(1.0, 1.0, 1.0)
 
 template<>
-struct alignas(8) Vector<2, float>
+struct alignas(METAL_FLOAT2_ALIGNEMENT) Vector<2, float>
 {
-    float x = 0;
-    float y = 0;
+    float x = 0; // NOLINT(misc-non-private-member-variables-in-classes)
+    float y = 0; // NOLINT(misc-non-private-member-variables-in-classes)
 
     Vector()              = default;
     Vector(const Vector&) = default;
     Vector(Vector&&)      = default;
 
     Vector(float x, float y);
-    Vector(float arr[2]);
+    explicit Vector(float arr[2]);
 
     float length() const;
 
     void normalize();
     Vector normalized() const;
+
+    ~Vector() = default;
 
     Vector& operator = (const Vector&) = default;
     Vector& operator = (Vector&&)      = default;
@@ -77,9 +83,9 @@ struct alignas(8) Vector<2, float>
 };
 
 template<>
-struct alignas(16) Vector<3, float>
+struct alignas(METAL_FLOAT3_ALIGNEMENT) Vector<3, float>
 {
-    union
+    union // NOLINT(misc-non-private-member-variables-in-classes)
     {
         struct{ float x, y, z; };
         struct{ float r, g, b; };
@@ -90,15 +96,17 @@ struct alignas(16) Vector<3, float>
     Vector(Vector&&)      = default;
 
     Vector(float x, float y, float z);
-    Vector(float arr[3]);
-    Vector(vec2f v2f, float z);
+    explicit Vector(float arr[3]);
+    Vector(vec2f xy, float z);
 
-    inline vec2f xy() const { return vec2f(x, y); }
+    inline vec2f xy() const { return {x, y}; }
 
     float length() const;
 
     void normalize();
     Vector normalized() const;
+
+    ~Vector() = default;
 
     Vector& operator = (const Vector&) = default;
     Vector& operator = (Vector&&)      = default;
@@ -110,9 +118,9 @@ struct alignas(16) Vector<3, float>
 vec3f cross(const vec3f&, const vec3f&);
 
 template<>
-struct alignas(16) Vector<4, float>
+struct alignas(METAL_FLOAT4_ALIGNEMENT) Vector<4, float>
 {
-    union
+    union // NOLINT(misc-non-private-member-variables-in-classes)
     {
         struct{ float x, y, z, w; };
         struct{ float r, g, b, a; };
@@ -123,18 +131,20 @@ struct alignas(16) Vector<4, float>
     Vector(Vector&&)      = default;
 
     Vector(float x, float y, float z, float w);
-    Vector(float arr[4]);
-    Vector(vec2f v2fa, vec2f v2fb);
-    Vector(vec2f v2f, float z, float w);
-    Vector(vec3f v3f, float w);
+    explicit Vector(float arr[4]);
+    Vector(vec3f xyz, float w);
+    Vector(vec2f xy,  float z, float w);
+    Vector(vec2f xy,  vec2f zw);
 
-    inline vec2f xy() const { return vec2f(x, y); }
-    inline vec3f xyz() const { return vec3f(x, y, z); }
+    inline vec2f xy() const { return {x, y}; }
+    inline vec3f xyz() const { return {x, y, z}; }
 
     float length() const;
 
     void normalize();
     Vector normalized() const;
+
+    ~Vector() = default;
 
     Vector& operator = (const Vector&) = default;
     Vector& operator = (Vector&&)      = default;
