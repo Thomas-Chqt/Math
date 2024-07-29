@@ -11,8 +11,11 @@ include(GoogleTest)
 
 add_executable(Math_test)
 
-set_target_properties(Math_test PROPERTIES CXX_STANDARD 14 CXX_STANDARD_REQUIRED ON)
-
+set_target_properties(Math_test
+    PROPERTIES CXX_STANDARD 14
+    CXX_STANDARD_REQUIRED ON
+    FOLDER "tests"
+)
 
 file(GLOB_RECURSE MATH_TEST_SRC "*.cpp" "*.tpp" "*.hpp")
 target_sources(Math_test PRIVATE ${MATH_TEST_SRC})
