@@ -10,7 +10,6 @@
 #include "Math/Matrix.hpp"
 #include "Math/Vector.hpp"
 #include "UtilsCPP/RuntimeError.hpp"
-#include <cmath>
 
 namespace math
 {
@@ -156,35 +155,6 @@ mat4x4 operator * (const mat4x4& lhs, const mat4x4& rhs)
     };
 }
 
-mat4x4 mat4x4::rotation(const vec3f& rads)
-{
-    using std::cos;
-    using std::sin;
-
-    math::mat4x4 rotX(
-        1,           0,            0, 0,
-        0, cos(rads.x), -sin(rads.x), 0,
-        0, sin(rads.x),  cos(rads.x), 0,
-        0,           0,            0, 1
-    );
-
-    math::mat4x4 rotY(
-        cos(rads.y), 0, sin(rads.y), 0,
-                  0, 1,           0, 0,
-       -sin(rads.y), 0, cos(rads.y), 0,
-                  0, 0,           0, 1
-    );
-
-    math::mat4x4 rotZ(
-        cos(rads.z), -sin(rads.z), 0, 0,
-        sin(rads.z),  cos(rads.z), 0, 0,
-                  0,            0, 1, 0,
-                  0,            0, 0, 1
-    );
-
-    return rotY * rotX * rotZ;
-}
-
 mat4x4 mat4x4::translation(const vec3f& vals)
 {
     return {
@@ -192,16 +162,6 @@ mat4x4 mat4x4::translation(const vec3f& vals)
         0, 1, 0, vals.y,
         0, 0, 1, vals.z,
         0, 0, 0,      1
-    };
-}
-
-mat4x4 mat4x4::scale(const vec3f& vals)
-{
-    return {
-        vals.x,      0,      0, 0,
-             0, vals.y,      0, 0,
-             0,      0, vals.z, 0,
-             0,      0,      0, 1
     };
 }
 
