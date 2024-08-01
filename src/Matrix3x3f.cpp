@@ -10,6 +10,7 @@
 #include "Math/Matrix.hpp"
 #include "Math/Vector.hpp"
 #include "UtilsCPP/RuntimeError.hpp"
+#include <cmath>
 
 namespace math
 {
