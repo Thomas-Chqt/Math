@@ -10,6 +10,7 @@
 #include "Math/Matrix.hpp"
 #include "Math/Vector.hpp"
 #include "UtilsCPP/RuntimeError.hpp"
+#include <cmath>
 
 namespace math
 {
@@ -96,6 +97,50 @@ mat3x3 operator * (const mat3x3& lhs, const mat3x3& rhs)
         lhs[0][2] * rhs[0][0] + lhs[1][2] * rhs[0][1] + lhs[2][2] * rhs[0][2],
         lhs[0][2] * rhs[1][0] + lhs[1][2] * rhs[1][1] + lhs[2][2] * rhs[1][2],
         lhs[0][2] * rhs[2][0] + lhs[1][2] * rhs[2][1] + lhs[2][2] * rhs[2][2]
+    };
+}
+
+mat3x3 mat3x3::rotation(const vec3f& rads)
+{
+    using std::cos;
+    using std::sin;
+
+    math::mat3x3 rotX(
+        1,           0,            0,
+        0, cos(rads.x), -sin(rads.x),
+        0, sin(rads.x),  cos(rads.x)
+    );
+
+    math::mat3x3 rotY(
+        cos(rads.y), 0, sin(rads.y),
+                  0, 1,           0,
+       -sin(rads.y), 0, cos(rads.y)
+    );
+
+    math::mat3x3 rotZ(
+        cos(rads.z), -sin(rads.z), 0,
+        sin(rads.z),  cos(rads.z), 0,
+                  0,            0, 1
+    );
+
+    return rotY * rotX * rotZ;
+}
+
+mat3x3 mat3x3::scale(const vec3f& vals)
+{
+    return {
+        vals.x,      0,      0,
+             0, vals.y,      0,
+             0,      0, vals.z
+    };
+}
+
+mat3x3 mat3x3::translation(const vec2f& vals)
+{
+    return {
+        1, 0, vals.x,
+        0, 1, vals.y,
+        0, 0,      1
     };
 }
 
