@@ -41,6 +41,7 @@ void vec3f::normalize()
     float len = length();
     if (len == 0)
         return;
+
     x /= len;
     y /= len;
     z /= len;

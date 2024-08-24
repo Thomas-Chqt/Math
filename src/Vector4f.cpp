@@ -49,6 +49,8 @@ float vec4f::length() const
 void vec4f::normalize()
 {
     float len = length();
+    if (len == 0)
+        return;
 
     x /= len;
     y /= len;

@@ -237,6 +237,9 @@ bool operator == (const Vector<L, float>& lhs, const Vector<L, float>& rhs)
 }
 
 template<utils::uint8 L>
+inline bool operator != (const Vector<L, float>& lhs, const Vector<L, float>& rhs) { return !(lhs == rhs); }
+
+template<utils::uint8 L>
 std::ostream& operator << (std::ostream& os, const Vector<L, float>& vec)
 {
     os << '[';

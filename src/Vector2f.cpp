@@ -33,6 +33,8 @@ float vec2f::length() const
 void vec2f::normalize()
 {
     float len = length();
+    if (len == 0)
+        return;
 
     x /= len;
     y /= len;
