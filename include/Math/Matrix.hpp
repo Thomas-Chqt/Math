@@ -10,6 +10,7 @@
 #ifndef MATRIX_HPP
 # define MATRIX_HPP
 
+#include "Math/Macros.hpp"
 #include "UtilsCPP/Types.hpp"
 #include "Vector.hpp"
 
@@ -24,7 +25,7 @@ using mat4x4 = Matrix<4, 4, float>;
 using mat3x3 = Matrix<3, 3, float>;
 
 template<>
-class alignas(METAL_MATRIX_ALIGNEMENT) Matrix<3, 3, float>
+class MATH_API alignas(METAL_MATRIX_ALIGNEMENT) Matrix<3, 3, float>
 {
 public:
     Matrix();
@@ -43,10 +44,10 @@ public:
 
     Matrix(const mat4x4&);
 
-    static mat3x3 rotation(const vec3f& rads);
-    static mat3x3 scale(const vec3f& vals);
+    MATH_API static mat3x3 rotation(const vec3f& rads);
+    MATH_API static mat3x3 scale(const vec3f& vals);
 
-    static mat3x3 translation(const vec2f& vals);
+    MATH_API static mat3x3 translation(const vec2f& vals);
 
     ~Matrix() = default;
 
@@ -62,7 +63,7 @@ public:
 };
 
 template<>
-class alignas(METAL_MATRIX_ALIGNEMENT) Matrix<4, 4, float>
+class MATH_API alignas(METAL_MATRIX_ALIGNEMENT) Matrix<4, 4, float>
 {
 public:
     Matrix();
@@ -83,10 +84,10 @@ public:
 
     Matrix(const mat3x3&);
 
-    inline static mat4x4 rotation(const vec3f& rads) { return mat4x4(mat3x3::rotation(rads)); }
-    inline static mat4x4 scale(const vec3f& vals) { return mat4x4(mat3x3::scale(vals)); }
+    MATH_API inline static mat4x4 rotation(const vec3f& rads) { return mat4x4(mat3x3::rotation(rads)); }
+    MATH_API inline static mat4x4 scale(const vec3f& vals) { return mat4x4(mat3x3::scale(vals)); }
 
-    static mat4x4 translation(const vec3f& vals);
+    MATH_API static mat4x4 translation(const vec3f& vals);
 
     float determinant() const;
     mat4x4 inversed() const;
@@ -105,16 +106,16 @@ public:
 };
 
 template<utils::uint8 S>
-Vector<S, float> operator * (const Vector<S, float>&, const Matrix<S, S, float>&);
+MATH_API Vector<S, float> operator * (const Vector<S, float>&, const Matrix<S, S, float>&);
 
 template<utils::uint8 S>
 inline Vector<S, float> operator *= (Vector<S, float>& vec, const Matrix<S, S, float>& mat) { return vec = vec * mat; }
 
 template<utils::uint8 S>
-Vector<S, float> operator * (const Matrix<S, S, float>&, const Vector<S, float>&);
+MATH_API Vector<S, float> operator * (const Matrix<S, S, float>&, const Vector<S, float>&);
 
 template<utils::uint8 S>
-Matrix<S, S, float> operator * (const Matrix<S, S, float>&, const Matrix<S, S, float>&);
+MATH_API Matrix<S, S, float> operator * (const Matrix<S, S, float>&, const Matrix<S, S, float>&);
 
 template<utils::uint8 S>
 inline Matrix<S, S, float> operator *= (Matrix<S, S, float>& lhs, const Matrix<S, S, float>& rhs) { return lhs = lhs * rhs; }

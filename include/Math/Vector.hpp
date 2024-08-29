@@ -10,6 +10,7 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
+#include "Math/Macros.hpp"
 #ifndef __METAL_VERSION__
     #include <ostream>
     #include "UtilsCPP/Types.hpp"
@@ -56,7 +57,7 @@ using rgb   = vec3f;
 #define WHITE3 math::rgb(1.0, 1.0, 1.0)
 
 template<>
-struct alignas(METAL_FLOAT2_ALIGNEMENT) Vector<2, float>
+struct MATH_API alignas(METAL_FLOAT2_ALIGNEMENT) Vector<2, float>
 {
     float x = 0; // NOLINT(misc-non-private-member-variables-in-classes)
     float y = 0; // NOLINT(misc-non-private-member-variables-in-classes)
@@ -83,7 +84,7 @@ struct alignas(METAL_FLOAT2_ALIGNEMENT) Vector<2, float>
 };
 
 template<>
-struct alignas(METAL_FLOAT3_ALIGNEMENT) Vector<3, float>
+struct MATH_API alignas(METAL_FLOAT3_ALIGNEMENT) Vector<3, float>
 {
     union // NOLINT(misc-non-private-member-variables-in-classes)
     {
@@ -115,10 +116,10 @@ struct alignas(METAL_FLOAT3_ALIGNEMENT) Vector<3, float>
     const float& operator[](utils::uint8 idx) const;
 };
 
-vec3f cross(const vec3f&, const vec3f&);
+MATH_API vec3f cross(const vec3f&, const vec3f&);
 
 template<>
-struct alignas(METAL_FLOAT4_ALIGNEMENT) Vector<4, float>
+struct MATH_API alignas(METAL_FLOAT4_ALIGNEMENT) Vector<4, float>
 {
     union // NOLINT(misc-non-private-member-variables-in-classes)
     {

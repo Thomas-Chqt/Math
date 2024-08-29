@@ -63,7 +63,7 @@ const vec3f& mat3x3::operator [] (utils::uint8 idx) const
 }
 
 template<>
-vec3f operator * (const vec3f& v, const mat3x3& m)
+MATH_API vec3f operator * (const vec3f& v, const mat3x3& m)
 {
     return {
         m[0][0] * v.x + m[0][1] * v.y + m[0][2] * v.z,
@@ -73,7 +73,7 @@ vec3f operator * (const vec3f& v, const mat3x3& m)
 }
 
 template<>
-vec3f operator * (const mat3x3& m, const vec3f& v)
+MATH_API vec3f operator * (const mat3x3& m, const vec3f& v)
 {
     return {
         m[0][0] * v.x + m[1][0] * v.y + m[2][0] * v.z,
@@ -83,7 +83,7 @@ vec3f operator * (const mat3x3& m, const vec3f& v)
 }
 
 template<>
-mat3x3 operator * (const mat3x3& lhs, const mat3x3& rhs)
+MATH_API mat3x3 operator * (const mat3x3& lhs, const mat3x3& rhs)
 {
     return {
         lhs[0][0] * rhs[0][0] + lhs[1][0] * rhs[0][1] + lhs[2][0] * rhs[0][2],

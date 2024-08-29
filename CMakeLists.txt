@@ -9,27 +9,51 @@ cmake_minimum_required(VERSION 3.16)
 
 enable_testing()
 
-option(BUILD_SHARED_LIBS  "Build using shared libraries"       OFF)
-option(MATH_BUILD_TESTS   "Include Math tests int the project" OFF)
+option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
+option(MATH_BUILD_TESTS  "Build Math tests"             OFF)
 
 project(Math)
-
 enable_language(CXX)
 
+if(NOT CMAKE_RUNTIME_OUTPUT_DIRECTORY)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+endif()
 
-add_library(Math ${MATH_LIBRARY_TYPE})
+if(NOT CMAKE_LIBRARY_OUTPUT_DIRECTORY)
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
+endif()
 
-set_target_properties(Math PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
+if(NOT CMAKE_ARCHIVE_OUTPUT_DIRECTORY)
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
+endif()
 
+add_library(Math)
 
-file(GLOB_RECURSE MATH_SRC "src/*.cpp" "src/*.tpp" "include/*.tpp" "src/*.hpp" "include/*.hpp")
+set_target_properties(Math
+    PROPERTIES CXX_STANDARD 11
+    CXX_STANDARD_REQUIRED   ON
+    CXX_VISIBILITY_PRESET   hidden
+)
+
+file(GLOB_RECURSE MATH_SRC "src/*" "include/*")
 target_sources(Math PRIVATE ${MATH_SRC})
 
 target_include_directories(Math PRIVATE "src" PUBLIC "include")
 
-add_subdirectory("dependencies")
+target_compile_definitions(Math PRIVATE MATH_API_IMPLEMENTATION)
+if(BUILD_SHARED_LIBS)
+    target_compile_definitions(Math INTERFACE MATH_DLL_LINK)
+endif()
 
+add_subdirectory("dependencies")
 
 if (MATH_BUILD_TESTS)
     add_subdirectory(tests)
 endif()
+
+install(TARGETS Math
+    RUNTIME DESTINATION "bin"
+    LIBRARY DESTINATION "lib"
+    ARCHIVE DESTINATION "lib"
+)
+install(DIRECTORY "include/" DESTINATION "include")
