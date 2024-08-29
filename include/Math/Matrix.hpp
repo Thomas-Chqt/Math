@@ -44,10 +44,10 @@ public:
 
     Matrix(const mat4x4&);
 
-    MATH_API static mat3x3 rotation(const vec3f& rads);
-    MATH_API static mat3x3 scale(const vec3f& vals);
+    static mat3x3 rotation(const vec3f& rads);
+    static mat3x3 scale(const vec3f& vals);
 
-    MATH_API static mat3x3 translation(const vec2f& vals);
+    static mat3x3 translation(const vec2f& vals);
 
     ~Matrix() = default;
 
@@ -84,10 +84,10 @@ public:
 
     Matrix(const mat3x3&);
 
-    MATH_API inline static mat4x4 rotation(const vec3f& rads) { return mat4x4(mat3x3::rotation(rads)); }
-    MATH_API inline static mat4x4 scale(const vec3f& vals) { return mat4x4(mat3x3::scale(vals)); }
+    inline static mat4x4 rotation(const vec3f& rads) { return mat4x4(mat3x3::rotation(rads)); }
+    inline static mat4x4 scale(const vec3f& vals) { return mat4x4(mat3x3::scale(vals)); }
 
-    MATH_API static mat4x4 translation(const vec3f& vals);
+    static mat4x4 translation(const vec3f& vals);
 
     float determinant() const;
     mat4x4 inversed() const;
