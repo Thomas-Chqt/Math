@@ -25,7 +25,7 @@ using mat4x4 = Matrix<4, 4, float>;
 using mat3x3 = Matrix<3, 3, float>;
 
 template<>
-class MATH_API alignas(METAL_MATRIX_ALIGNEMENT) Matrix<3, 3, float>
+class MATH_API ALIGNAS(METAL_MATRIX_ALIGNEMENT) Matrix<3, 3, float>
 {
 public:
     Matrix();
@@ -63,7 +63,7 @@ public:
 };
 
 template<>
-class MATH_API alignas(METAL_MATRIX_ALIGNEMENT) Matrix<4, 4, float>
+class MATH_API ALIGNAS(METAL_MATRIX_ALIGNEMENT) Matrix<4, 4, float>
 {
 public:
     Matrix();

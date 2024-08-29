@@ -20,5 +20,11 @@
     #define MATH_API
 #endif
 
+#if defined(__GNUC__) && __GNUC__ < 14
+    #define ALIGNAS(x) __attribute__((aligned(x)))
+#else
+    #define ALIGNAS(x) alignas(x)
+#endif
+
 
 #endif // MATH_MACROS_HPP

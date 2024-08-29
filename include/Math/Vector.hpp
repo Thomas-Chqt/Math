@@ -57,7 +57,7 @@ using rgb   = vec3f;
 #define WHITE3 math::rgb(1.0, 1.0, 1.0)
 
 template<>
-struct MATH_API alignas(METAL_FLOAT2_ALIGNEMENT) Vector<2, float>
+struct MATH_API ALIGNAS(METAL_FLOAT2_ALIGNEMENT) Vector<2, float>
 {
     float x = 0; // NOLINT(misc-non-private-member-variables-in-classes)
     float y = 0; // NOLINT(misc-non-private-member-variables-in-classes)
@@ -84,7 +84,7 @@ struct MATH_API alignas(METAL_FLOAT2_ALIGNEMENT) Vector<2, float>
 };
 
 template<>
-struct MATH_API alignas(METAL_FLOAT3_ALIGNEMENT) Vector<3, float>
+struct MATH_API ALIGNAS(METAL_FLOAT3_ALIGNEMENT) Vector<3, float>
 {
     union // NOLINT(misc-non-private-member-variables-in-classes)
     {
@@ -119,7 +119,7 @@ struct MATH_API alignas(METAL_FLOAT3_ALIGNEMENT) Vector<3, float>
 MATH_API vec3f cross(const vec3f&, const vec3f&);
 
 template<>
-struct MATH_API alignas(METAL_FLOAT4_ALIGNEMENT) Vector<4, float>
+struct MATH_API ALIGNAS(METAL_FLOAT4_ALIGNEMENT) Vector<4, float>
 {
     union // NOLINT(misc-non-private-member-variables-in-classes)
     {
