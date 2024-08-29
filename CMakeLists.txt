@@ -50,10 +50,3 @@ add_subdirectory("dependencies")
 if (MATH_BUILD_TESTS)
     add_subdirectory(tests)
 endif()
-
-install(TARGETS Math
-    RUNTIME DESTINATION "bin"
-    LIBRARY DESTINATION "lib"
-    ARCHIVE DESTINATION "lib"
-)
-install(DIRECTORY "include/" DESTINATION "include")
