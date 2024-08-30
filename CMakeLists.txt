@@ -11,6 +11,7 @@ enable_testing()
 
 option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
 option(MATH_BUILD_TESTS  "Build Math tests"             OFF)
+option(MATH_INSTALL      "Enable Math install command"  ON)
 
 project(Math)
 enable_language(CXX)
@@ -49,4 +50,13 @@ add_subdirectory("dependencies")
 
 if (MATH_BUILD_TESTS)
     add_subdirectory(tests)
+endif()
+
+if(MATH_INSTALL)
+    install(TARGETS Math
+        RUNTIME DESTINATION "bin"
+        LIBRARY DESTINATION "lib"
+        ARCHIVE DESTINATION "lib"
+    )
+    install(DIRECTORY "include/" DESTINATION "include")
 endif()
