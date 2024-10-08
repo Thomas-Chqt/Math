@@ -21,8 +21,8 @@ namespace math
 
 template<utils::uint8 C, utils::uint8 R, typename T> class Matrix;
 
-using mat4x4 = Matrix<4, 4, float>;
 using mat3x3 = Matrix<3, 3, float>;
+using mat4x4 = Matrix<4, 4, float>;
 
 template<>
 class MATH_API ALIGNAS(METAL_MATRIX_ALIGNEMENT) Matrix<3, 3, float>
