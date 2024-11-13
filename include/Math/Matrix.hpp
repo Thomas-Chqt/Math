@@ -10,6 +10,7 @@
 #ifndef MATRIX_HPP
 # define MATRIX_HPP
 
+#include "Math/Macros.hpp"
 #include "UtilsCPP/Types.hpp"
 #include "Vector.hpp"
 
@@ -20,11 +21,11 @@ namespace math
 
 template<utils::uint8 C, utils::uint8 R, typename T> class Matrix;
 
-using mat4x4 = Matrix<4, 4, float>;
 using mat3x3 = Matrix<3, 3, float>;
+using mat4x4 = Matrix<4, 4, float>;
 
 template<>
-class alignas(METAL_MATRIX_ALIGNEMENT) Matrix<3, 3, float>
+class MATH_API ALIGNAS(METAL_MATRIX_ALIGNEMENT) Matrix<3, 3, float>
 {
 public:
     Matrix();
@@ -62,7 +63,7 @@ public:
 };
 
 template<>
-class alignas(METAL_MATRIX_ALIGNEMENT) Matrix<4, 4, float>
+class MATH_API ALIGNAS(METAL_MATRIX_ALIGNEMENT) Matrix<4, 4, float>
 {
 public:
     Matrix();
@@ -105,16 +106,16 @@ public:
 };
 
 template<utils::uint8 S>
-Vector<S, float> operator * (const Vector<S, float>&, const Matrix<S, S, float>&);
+MATH_API Vector<S, float> operator * (const Vector<S, float>&, const Matrix<S, S, float>&);
 
 template<utils::uint8 S>
 inline Vector<S, float> operator *= (Vector<S, float>& vec, const Matrix<S, S, float>& mat) { return vec = vec * mat; }
 
 template<utils::uint8 S>
-Vector<S, float> operator * (const Matrix<S, S, float>&, const Vector<S, float>&);
+MATH_API Vector<S, float> operator * (const Matrix<S, S, float>&, const Vector<S, float>&);
 
 template<utils::uint8 S>
-Matrix<S, S, float> operator * (const Matrix<S, S, float>&, const Matrix<S, S, float>&);
+MATH_API Matrix<S, S, float> operator * (const Matrix<S, S, float>&, const Matrix<S, S, float>&);
 
 template<utils::uint8 S>
 inline Matrix<S, S, float> operator *= (Matrix<S, S, float>& lhs, const Matrix<S, S, float>& rhs) { return lhs = lhs * rhs; }

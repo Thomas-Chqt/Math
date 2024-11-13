@@ -108,7 +108,7 @@ const vec4f& mat4x4::operator[](utils::uint8 idx) const
 }
 
 template<>
-vec4f operator * (const vec4f& v, const mat4x4& m)
+MATH_API vec4f operator * (const vec4f& v, const mat4x4& m)
 {
     return {
         m[0][0] * v.x + m[0][1] * v.y + m[0][2] * v.z + m[0][3] * v.w,
@@ -119,7 +119,7 @@ vec4f operator * (const vec4f& v, const mat4x4& m)
 }
 
 template<>
-vec4f operator * (const mat4x4& m, const vec4f& v)
+MATH_API vec4f operator * (const mat4x4& m, const vec4f& v)
 {
     return {
         m[0][0] * v.x + m[1][0] * v.y + m[2][0] * v.z + m[3][0] * v.w,
@@ -130,7 +130,7 @@ vec4f operator * (const mat4x4& m, const vec4f& v)
 }
 
 template<>
-mat4x4 operator * (const mat4x4& lhs, const mat4x4& rhs)
+MATH_API mat4x4 operator * (const mat4x4& lhs, const mat4x4& rhs)
 {
     return {
         lhs[0][0] * rhs[0][0] + lhs[1][0] * rhs[0][1] + lhs[2][0] * rhs[0][2] + lhs[3][0] * rhs[0][3],
