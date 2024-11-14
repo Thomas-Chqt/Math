@@ -13,20 +13,14 @@ option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
 option(MATH_BUILD_TESTS  "Build Math tests"             OFF)
 option(MATH_INSTALL      "Enable Math install command"  ON)
 
+if(BUILD_SHARED_LIBS)
+    set(MATH_API_EXPORT ON CACHE BOOL "Export all the symbols" FORCE)
+else()
+    option(MATH_API_EXPORT "Export all the symbols" OFF)
+endif()
+
 project(Math)
 enable_language(CXX)
-
-if(NOT CMAKE_RUNTIME_OUTPUT_DIRECTORY)
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
-endif()
-
-if(NOT CMAKE_LIBRARY_OUTPUT_DIRECTORY)
-    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
-endif()
-
-if(NOT CMAKE_ARCHIVE_OUTPUT_DIRECTORY)
-    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
-endif()
 
 add_library(Math)
 
@@ -41,9 +35,11 @@ target_sources(Math PRIVATE ${MATH_SRC})
 
 target_include_directories(Math PRIVATE "src" PUBLIC "include")
 
-target_compile_definitions(Math PRIVATE MATH_API_IMPLEMENTATION)
+if(MATH_API_EXPORT)
+    target_compile_definitions(Math PRIVATE "MATH_API_EXPORT")
+endif()
 if(BUILD_SHARED_LIBS)
-    target_compile_definitions(Math INTERFACE MATH_DLL_LINK)
+    target_compile_definitions(Math INTERFACE "MATH_API_IMPORT")
 endif()
 
 add_subdirectory("dependencies")

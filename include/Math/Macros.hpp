@@ -10,11 +10,11 @@
 #ifndef MATH_MACROS_HPP
 #define MATH_MACROS_HPP
 
-#if (defined(__GNUC__) || defined(__clang__)) && defined(MATH_API_IMPLEMENTATION)
+#if (defined(__GNUC__) || defined(__clang__)) && defined(MATH_API_EXPORT)
     #define MATH_API __attribute__((visibility("default")))
-#elif defined(_MSC_VER) && defined(MATH_API_IMPLEMENTATION)
+#elif defined(_MSC_VER) && defined(MATH_API_EXPORT)
     #define MATH_API __declspec(dllexport)
-#elif defined(_MSC_VER) && defined(MATH_DLL_LINK)
+#elif defined(_MSC_VER) && defined(MATH_API_IMPORT)
     #define MATH_API __declspec(dllimport)
 #else
     #define MATH_API
