@@ -44,7 +44,7 @@ endif()
 
 add_subdirectory("dependencies")
 
-if (MATH_BUILD_TESTS)
+if (MATH_BUILD_TESTS AND NOT (BUILD_SHARED_LIBS AND WIN32))
     add_subdirectory(tests)
 endif()
 
